@@ -10,8 +10,8 @@ function AuthProvider({ children }) {
     useEffect(() => {
         const unsub = onAuthStateChanged(auth, (user) => {
             if (user) {
-                const { displayName, photoURL, uid, email } = user;
-                setUser({ displayName, photoURL, uid, email });
+                const { uid, displayName, authProvider, photoURL, email } = user;
+                setUser({ uid, displayName, authProvider, photoURL, email });
             }
         });
 

@@ -6,7 +6,7 @@ function Card({ product }) {
     const navigate = useNavigate();
 
     const priceOld = useMemo(() => {
-        return Math.floor(product.price / 0.7);
+        return Math.round((product.price / 0.7) * 100) / 100;
     }, [product.price]);
 
     const arrayStar = useMemo(() => {
@@ -26,7 +26,7 @@ function Card({ product }) {
     }, [product.vote]);
 
     return (
-        <div className="w-[20%] px-[5px] ">
+        <div className="w-[25%] px-[10px] ">
             <div
                 onClick={() => navigate(`/product/${product.id}`, { state: product })}
                 className="w-full mt-[10px] shadow-sm border border-[#f1f1f1] border-solid cursor-pointer hover:translate-y-[-1px]"
@@ -41,8 +41,8 @@ function Card({ product }) {
                         <span>{product.pet}</span>
                     </div>
                     <div className="mt-[6px]">
-                        <span className="text-[14px] text-[#666] line-through">{priceOld}đ</span>
-                        <span className="text-[14px] text-[#f7432e] ml-[10px]">{product.price}đ</span>
+                        <span className="text-[14px] text-[#666] line-through">${priceOld}</span>
+                        <span className="text-[14px] text-[#f7432e] ml-[10px]">${product.price}</span>
                     </div>
                     <div className="flex items-center justify-between mt-[6px]">
                         <FontAwesomeIcon icon={faHeart} className="text-[14px] text-[#f7432e]" />
@@ -55,7 +55,7 @@ function Card({ product }) {
                                     <FontAwesomeIcon key={item} icon={faStar} className="text-[8px]" />
                                 ))}
                             </p>
-                            <span className="text-[12px] ml-[6px] font-semibold">{product.numberSold} đã bán</span>
+                            <span className="text-[12px] ml-[6px] font-semibold">{product.sold} đã bán</span>
                         </div>
                     </div>
                 </div>

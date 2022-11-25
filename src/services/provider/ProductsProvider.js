@@ -1,5 +1,4 @@
 import { useEffect, useState, useMemo, createContext } from 'react';
-import { getAllDocuments } from '~/utils/manageData';
 import { useFirestore, useAuth } from '~/hooks';
 
 const ProductsContext = createContext();
@@ -7,42 +6,17 @@ const ProductsContext = createContext();
 function ProductsProvider({ children }) {
     const [products, setProducts] = useState([]);
     const [productsChoosed, setProductsChoosed] = useState([]);
-    const [listFilterAnimals, setListFilterAnimals] = useState([]);
-    const [listFilterBrands, setListFilterBrands] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const { user } = useAuth();
 
+    const arrayProducts = useFirestore('products');
     useEffect(() => {
         setIsLoading(true);
-        getAllDocuments('products')
-            .then((data) => {
-                setProducts(data);
-                setIsLoading(false);
-            })
-            .catch(() => {
-                console.error('Fetch data error!');
-            });
-    }, []);
-
-    useEffect(() => {
-        getAllDocuments('filter-animals')
-            .then((data) => {
-                setListFilterAnimals(data);
-            })
-            .catch(() => {
-                console.error('Fetch data error!');
-            });
-    }, []);
-
-    useEffect(() => {
-        getAllDocuments('filter-brands')
-            .then((data) => {
-                setListFilterBrands(data);
-            })
-            .catch(() => {
-                console.error('Fetch data error!');
-            });
-    }, []);
+        if (arrayProducts) {
+            setProducts(arrayProducts);
+            setIsLoading(false);
+        }
+    }, [arrayProducts]);
 
     const condition = useMemo(() => {
         return {
@@ -66,8 +40,6 @@ function ProductsProvider({ children }) {
                 products,
                 setIsLoading,
                 isLoading,
-                listFilterAnimals,
-                listFilterBrands,
                 listProductsChoosed,
                 productsChoosed,
                 setProductsChoosed,

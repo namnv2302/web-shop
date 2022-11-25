@@ -1,6 +1,6 @@
-import { useState, useLayoutEffect, useEffect } from 'react';
+import { useState, useLayoutEffect, useEffect, useMemo } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faXmark, faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faTrashCan, faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { updateDocument, deleteFieldsDoc } from '~/utils/manageData';
 import { useProducts } from '~/hooks';
 
@@ -8,11 +8,15 @@ function CartItem({ product }) {
     const { productsChoosed } = useProducts();
     const [count, setCount] = useState(product.count);
 
+    const total = useMemo(() => {
+        return Math.round(product.count * product.price * 100) / 100;
+    }, [product]);
+
     useLayoutEffect(() => {
         if (count <= 0) {
             setCount(1);
         }
-    }, [count]);
+    }, [count, setCount]);
     useEffect(() => {
         const currentItem = productsChoosed.find((item) => item.id === product.id);
         updateDocument('cart', `${currentItem.id}`, { count: count });
@@ -24,40 +28,42 @@ function CartItem({ product }) {
     };
 
     return (
-        <div className="relative flex border border-solid mb-[16px]">
-            <img className="w-[113px] block object-cover" src={product.imageURL} alt={product.name} />
-            <div className="p-[8px] pr-[30px] ml-[8px] cursor-default">
-                <p className="text-[16px] text-[#000] font-medium">{product.brand}</p>
-                <p className="cart-item text-[14px] text-[#777] mt-[8px] leading-[18px] max-h-[18px] overflow-hidden">
-                    {product.name}
+        <tr className="border border-[#ebebeb] h-[138px]">
+            <td className="text-[15px] w-[138px] font-bold border border-[#ebebeb] p-[8px]">
+                <img src={product.imageURL} alt={product.brand} className="w-[100%]" />
+            </td>
+            <td className="text-[14px] w-[138px] font-normal leading-[26px] border border-[#ebebeb] p-[8px]">
+                <span>{product.name}</span>
+            </td>
+            <td className="text-[20px] w-[138px] font-normal leading-[26px] border border-[#ebebeb] p-[8px]">
+                <span className="block text-center w-[100%]">{product.price}</span>
+            </td>
+            <td className="text-[20px] w-[138px] font-normal leading-[26px] border border-[#ebebeb] p-[8px]">
+                <p className="flex items-center justify-center py-[1px]">
+                    <FontAwesomeIcon
+                        onClick={() => setCount((prev) => prev - 1)}
+                        className="p-[8px] bg-[#eee] text-[12px] cursor-pointer"
+                        icon={faMinus}
+                    />{' '}
+                    <span className="mx-[10px] text-[16px]">{product.count}</span>{' '}
+                    <FontAwesomeIcon
+                        onClick={() => setCount((prev) => prev + 1)}
+                        className="p-[8px] bg-[#eee] text-[12px] cursor-pointer"
+                        icon={faPlus}
+                    />
                 </p>
-                <div className="flex items-center text-[14px] my-[12px]">
-                    <p className="flex items-center py-[1px]">
-                        Count:{' '}
-                        <FontAwesomeIcon
-                            onClick={() => setCount((prev) => prev - 1)}
-                            className="p-[4px] bg-[#eee] text-[12px] ml-[8px] cursor-pointer"
-                            icon={faMinus}
-                        />{' '}
-                        <span className="mx-[10px] text-[16px]">{count}</span>{' '}
-                        <FontAwesomeIcon
-                            onClick={() => setCount((prev) => prev + 1)}
-                            className="p-[4px] bg-[#eee] text-[12px] cursor-pointer"
-                            icon={faPlus}
-                        />
-                    </p>
-                </div>
-                <p className="text-[#000]">
-                    {count} <FontAwesomeIcon className="text-[10px] ml-[4px] mr-[8px]" icon={faXmark} />
-                    {product.price}
-                </p>
-            </div>
-            <FontAwesomeIcon
-                onClick={() => handleDelete(product.id)}
-                className="absolute top-[8px] right-[8px] p-[4px] text-[18px] cursor-pointer"
-                icon={faXmark}
-            />
-        </div>
+            </td>
+            <td className="text-[20px] w-[138px] font-normal leading-[26px] border border-[#ebebeb] p-[8px]">
+                <span className="block text-center w-[100%]">{total}</span>
+            </td>
+            <td className="text-[20px] w-[138px] text-center font-normal leading-[26px] border border-[#ebebeb] p-[8px]">
+                <FontAwesomeIcon
+                    onClick={() => handleDelete(product.id)}
+                    className="p-[4px] text-[18px] cursor-pointer"
+                    icon={faTrashCan}
+                />
+            </td>
+        </tr>
     );
 }
 

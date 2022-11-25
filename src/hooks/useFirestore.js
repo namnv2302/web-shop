@@ -6,9 +6,11 @@ function useFirestore(nameCollection, condition) {
     const [value, setValue] = useState([]);
 
     useEffect(() => {
-        const colRef = collection(db, nameCollection);
-        const q = query(colRef, where(condition.fieldName, condition.operator, condition.compareValue));
-        const unsubscribe = onSnapshot(q, (querySnapshot) => {
+        let colRef = collection(db, nameCollection);
+        if (condition) {
+            colRef = query(colRef, where(condition.fieldName, condition.operator, condition.compareValue));
+        }
+        const unsubscribe = onSnapshot(colRef, (querySnapshot) => {
             const documents = [];
             querySnapshot.forEach((doc) => {
                 documents.push(doc.data());

@@ -8,6 +8,7 @@ import CartItem from '~/components/CartItem';
 import OrderPlaced from '~/components/OrderPlaced';
 import { UserIcon } from '~/components/Icons';
 import { addDocument, deleteFieldsDoc } from '~/utils/manageData';
+import TotalTable from '~/components/TotalTable';
 
 function Cart() {
     const { productsChoosed } = useProducts();
@@ -37,48 +38,54 @@ function Cart() {
 
     return (
         <div className="mt-[80px]">
-            <div className="h-[34px] bg-[#f3f4f6] text-center leading-[34px]">Home / Cart</div>
+            <div className="h-[46px] bg-[#f3f4f6] text-center leading-[46px]">Home / Cart</div>
 
             {!isOrderPlaced ? (
                 Object.keys(user).length ? (
                     productsChoosed.length > 0 ? (
-                        <div className="flex justify-center mt-[16px]">
-                            <div className="w-[482px] p-[16px]">
-                                <p className="text-[16px] font-normal mb-[10px]">
-                                    <span className="text-[18px] font-medium">Cart</span> ({productsChoosed.length}{' '}
-                                    items)
-                                </p>
-                                {productsChoosed.length &&
-                                    productsChoosed.map((product) => <CartItem key={product.id} product={product} />)}
+                        <div className="mt-[80px]">
+                            <div className="flex justify-center">
+                                <div className="container px-[16px]">
+                                    <table className="w-[100%]">
+                                        <thead>
+                                            <tr className="border border-[#ebebeb] h-[53px]">
+                                                <th className="text-[15px] w-[138px] font-bold border border-[#ebebeb]">
+                                                    IMAGE
+                                                </th>
+                                                <th className="text-[15px] w-[324px] font-bold border border-[#ebebeb]">
+                                                    PRODUCT
+                                                </th>
+                                                <th className="text-[15px] w-[162px] font-bold border border-[#ebebeb]">
+                                                    PRICE
+                                                </th>
+                                                <th className="text-[15px] w-[216px] font-bold border border-[#ebebeb]">
+                                                    QUANTITY
+                                                </th>
+                                                <th className="text-[15px] w-[144px] font-bold border border-[#ebebeb]">
+                                                    TOTAL
+                                                </th>
+                                                <th className="text-[15px] w-[180px] font-bold border border-[#ebebeb]">
+                                                    REMOVE
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {productsChoosed.length &&
+                                                productsChoosed.map((product) => (
+                                                    <CartItem key={product.id} product={product} />
+                                                ))}
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
-                            <div className="w-[280px] p-[16px]">
-                                <p className="text-[18px] font-medium mb-[10px]">Price details</p>
-                                <p className="flex items-center justify-between text-[16px] mt-[8px]">
-                                    <span>Price</span>
-                                    <span>{total}</span>
-                                </p>
-                                <p className="flex items-center justify-between text-[16px] mt-[8px]">
-                                    <span>Discount</span>
-                                    <span>0</span>
-                                </p>
-                                <p className="flex items-center justify-between text-[16px] mt-[8px] pb-[12px] border-b border-solid">
-                                    <span>Shipping</span>
-                                    <span>FREE</span>
-                                </p>
-                                <p className="flex items-center justify-between text-[18px] font-semibold mt-[8px]">
-                                    <span className="">Total</span>
-                                    <span>{total}</span>
-                                </p>
-                                <button
-                                    onClick={handleOrder}
-                                    className="w-[100%] h-[42px] rounded-[6px] bg-[#000] text-[#fff] mt-[28px]"
-                                >
-                                    Place Order
-                                </button>
+                            <div className="flex justify-center mt-[30px]">
+                                <div className="container flex justify-end px-[16px]">
+                                    <TotalTable total={total} onOrder={handleOrder} />
+                                </div>
                             </div>
                         </div>
                     ) : (
-                        <div className="flex flex-col justify-center items-center mt-[240px] font-medium">
+                        <div className="flex flex-col justify-center items-center my-[240px] font-medium">
                             <div className="flex items-center justify-center w-[74px] h-[74px] rounded-full shadow-[0_0_10px_rgba(0,0,0,0.05)] border">
                                 <CartIcon />
                             </div>
@@ -94,7 +101,7 @@ function Cart() {
                         <span className="mt-[10px]">Sign In to view items in your cart</span>
                         <div
                             onClick={() => navigate('/login')}
-                            className="flex items-center justify-center mt-[30px] text-[#fff] bg-gradient-to-r from-[#8e2de2] to-[#4a00e0] w-[136px] h-[48px] rounded-[10px] shadow-[0_0_12px_rgba(0,0,0,0.24)] cursor-pointer"
+                            className="flex items-center justify-center mt-[30px] text-[#fff] bg-[#F6AB49] w-[136px] h-[48px] rounded-[10px] shadow-[0_0_12px_rgba(0,0,0,0.24)] cursor-pointer"
                         >
                             Sign In
                         </div>

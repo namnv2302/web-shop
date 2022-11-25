@@ -2,10 +2,10 @@ import Home from '~/pages/Home';
 import Shop from '~/pages/Shop';
 import Product from '~/pages/Product';
 import Cart from '~/pages/Cart';
+import Admin from '~/pages/Admin';
 import Login from '~/auth/pages/Login';
 import Register from '~/auth/pages/Register';
 import Logout from '~/auth/pages/Logout';
-import Admin from '~/pages/Admin';
 
 const publicRoutes = [
     { path: '/shop', component: Shop },

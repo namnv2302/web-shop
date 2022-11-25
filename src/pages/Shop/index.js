@@ -17,8 +17,13 @@ function Shop() {
     const [active, setActive] = useState(1);
     const [sortValue, setSortValue] = useState('Default sorting');
     const [isOpenSortOption, setIsOpenSortOption] = useState(false);
+    const [searchValue, setSearchValue] = useState('');
 
-    const oldProducts = useRef(products);
+    const oldProductsRef = useRef();
+
+    useEffect(() => {
+        oldProductsRef.current = products;
+    }, []);
 
     const handleSorting = (id) => {
         setActive(id);
@@ -27,32 +32,34 @@ function Shop() {
         switch (id) {
             case 1:
                 setSortValue('Default sorting');
-                newProducts = [...products];
+                newProducts = [...oldProductsRef.current];
 
                 setProducts(newProducts);
                 break;
             case 2:
                 setSortValue('Sort by price');
-                const arrayPrice = [...products].map((item) => item.price);
-                newProducts = sorting([...products], arrayPrice, 'price', (a, b) => b - a);
+                const arrayPrice = [...oldProductsRef.current].map((item) => item.price);
+                newProducts = sorting([...oldProductsRef.current], arrayPrice, 'price', (a, b) => b - a);
 
                 setProducts(newProducts);
                 break;
             case 3:
                 setSortValue('Sort by time');
+                const arraySec = [...oldProductsRef.current].map((item) => item.timeStamp[1]);
+                newProducts = sorting([...oldProductsRef.current], arraySec, 'timeStamp[1]', (a, b) => b - a);
 
                 break;
             case 4:
                 setSortValue('Sort by remaining');
-                const arrayRemain = [...products].map((item) => item.numberStill);
-                newProducts = sorting([...products], arrayRemain, 'numberStill', (a, b) => b - a);
+                const arrayRemain = [...oldProductsRef.current].map((item) => item.quantity);
+                newProducts = sorting([...oldProductsRef.current], arrayRemain, 'quantity', (a, b) => b - a);
 
                 setProducts(newProducts);
                 break;
             case 5:
                 setSortValue('Sort by sold');
-                const arraySold = [...products].map((item) => item.numberSold);
-                newProducts = sorting([...products], arraySold, 'numberSold', (a, b) => b - a);
+                const arraySold = [...oldProductsRef.current].map((item) => item.sold);
+                newProducts = sorting([...oldProductsRef.current], arraySold, 'sold', (a, b) => b - a);
 
                 setProducts(newProducts);
                 break;
@@ -67,20 +74,22 @@ function Shop() {
                 <Loading />
             ) : (
                 <div className="mt-[80px]">
-                    <div className="h-[34px] bg-[#f3f4f6] text-center leading-[34px]">Home / Shop</div>
-                    <div className="w-[1200px] max-w-[100%] my-[30px] mx-auto flex justify-center">
-                        <div className="container flex justify-between">
-                            <div className="w-[16.66667%]">
+                    <div className="h-[46px] bg-[#f3f4f6] text-center leading-[46px]">Home / Shop</div>
+                    <div className="flex justify-center mt-[60px]">
+                        <div className="container flex justify-between px-[16px]">
+                            <div className="w-[18%]">
                                 <Sidebar />
                             </div>
-                            <div className="w-[83.33333%] ml-[10px]">
+                            <div className="w-[82%] ml-[20px]">
                                 <div className="flex items-center justify-between">
                                     <h3 className="text-[20px] font-semibold">Product</h3>
                                     <div className="flex items-center h-[40px] w-[360px] border border-[rgb(243 244 246)] border-solid">
                                         <input
+                                            onChange={(e) => setSearchValue(e.target.value)}
+                                            value={searchValue}
                                             className="flex-1 px-[16px] h-[100%] text-[14px] text-[#333] outline-none font-medium"
                                             type="text"
-                                            placeholder="Search product..."
+                                            placeholder="Search product ..."
                                         />
                                         <button className="h-[100%] border-l-[1px] border-[rgb(243 244 246)] hover:bg-[#f1f1f1]">
                                             <FontAwesomeIcon icon={faMagnifyingGlass} className="px-[16px]" />
@@ -151,17 +160,37 @@ function Shop() {
                                 </div>
 
                                 {!products.length ? (
-                                    <div className="relative top-[50%] mt-[30px] flex flex-col justify-center items-center font-semibold">
+                                    <div className="relative my-[180px] flex flex-col justify-center items-center font-semibold">
                                         <div className="flex items-center justify-center w-[80px] h-[80px] rounded-full shadow-[0_0_10px_rgba(0,0,0,0.05)] border">
                                             <FontAwesomeIcon className="text-[28px]" icon={faSliders} />
                                         </div>
                                         <span className="mt-[10px]">No results found</span>
                                     </div>
                                 ) : (
-                                    <div className="flex flex-wrap mx-[-5px] mt-[10px]">
-                                        {products.map((product, index) => (
-                                            <Card key={index} product={product} />
-                                        ))}
+                                    <div>
+                                        <div className="flex flex-wrap mx-[-10px] mt-[20px]">
+                                            {products
+                                                // .filter((item) =>
+                                                //     item.name.toLowerCase().includes(searchValue.toLowerCase()),
+                                                // )
+                                                .map((product, index) => (
+                                                    <Card key={index} product={product} />
+                                                ))}
+                                        </div>
+                                        <div className="pagination flex items-center justify-center mt-[40px]">
+                                            <span className="active flex items-center justify-center w-[40px] h-[40px] mx-[5px] cursor-pointer text-[18px] text-[#F6AB49] border border-[#F6AB49]">
+                                                1
+                                            </span>
+                                            <span className="flex items-center justify-center w-[40px] h-[40px] mx-[5px] cursor-pointer text-[18px] text-[#F6AB49] border border-[#F6AB49]">
+                                                2
+                                            </span>
+                                            <span className="flex items-center justify-center w-[40px] h-[40px] mx-[5px] cursor-pointer text-[18px] text-[#F6AB49] border border-[#F6AB49]">
+                                                3
+                                            </span>
+                                            <span className="flex items-center justify-center w-[40px] h-[40px] mx-[5px] cursor-pointer text-[14px] text-[#F6AB49] border border-[#F6AB49]">
+                                                >>
+                                            </span>
+                                        </div>
                                     </div>
                                 )}
                             </div>

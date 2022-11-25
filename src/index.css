@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 @import 'normalize.css';
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@200;300;400;500;600;700&display=swap');
 
 :root {
     --primary-color: #16a3b7;
@@ -18,8 +18,13 @@
 
 body {
     text-rendering: optimizeSpeed;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Raleway', sans-serif;
     overflow-y: overlay;
+}
+
+::selection {
+    background-color: #f6ab49;
+    color: #fff;
 }
 
 /* Scrollbar CSS */
@@ -59,6 +64,58 @@ html *::-webkit-scrollbar-track {
 }
 
 .active {
-    background-color: #333;
+    background-color: #f6ab49;
     color: #fff;
+}
+
+.bg-rgba-1 {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Css pagination */
+.pagination {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    margin-top: 40px;
+}
+
+.pagination .number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    margin: 0 5px;
+    cursor: pointer;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    color: #ccc;
+}
+
+.pagination .selected {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    margin: 0 5px;
+    cursor: pointer;
+    font-size: 14px;
+    color: #3e5569;
+    border: 1px solid #3e5569;
+}
+
+.previous-button a,
+.next-button a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    margin: 0 5px;
+    cursor: pointer;
+    font-size: 14px;
+    color: #3e5569;
+    border: 1px solid #3e5569;
 }
