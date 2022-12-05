@@ -7,7 +7,7 @@ import { useProducts, useAuth } from '~/hooks';
 import CartItem from '~/components/CartItem';
 import OrderPlaced from '~/components/OrderPlaced';
 import { UserIcon } from '~/components/Icons';
-import { addDocument, deleteFieldsDoc } from '~/utils/manageData';
+import { addDocument, deleteFieldsDoc, updateDocument } from '~/utils/manageData';
 import TotalTable from '~/components/TotalTable';
 
 function Cart() {
@@ -34,6 +34,12 @@ function Cart() {
         });
         setIsOrderPlaced(true);
         toast.success('Order placed successfully');
+
+        orderList.forEach((product) => {
+            updateDocument('products', `${product.id}`, {
+                sold: product.sold + product.count,
+            });
+        });
     };
 
     return (

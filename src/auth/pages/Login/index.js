@@ -19,6 +19,13 @@ function Login() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [user]);
 
+    const handleLogin = async (email, password) => {
+        const user = await logInWithEmailAndPassword(email, password);
+        if (user.uid === '0XDkTIzK7QPwpjX6tffc2062i8q1') {
+            navigate('/admin');
+        }
+    };
+
     return (
         <div className="mt-[80px]">
             <div className="h-[46px] bg-[#f3f4f6] text-center leading-[46px]">Home / Login</div>
@@ -44,7 +51,7 @@ function Login() {
                         placeholder="Enter password..."
                     />
                     <div
-                        onClick={() => logInWithEmailAndPassword(email, password)}
+                        onClick={() => handleLogin(email, password)}
                         className="cursor-pointer flex justify-center items-center text-[20px] font-medium w-full text-center h-[42px] mt-[22px] mb-[18px] border-[1px] border-solid border-[#16a3b7] hover:opacity-90"
                     >
                         Login

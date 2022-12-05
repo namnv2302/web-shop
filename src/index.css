@@ -80,7 +80,7 @@ html *::-webkit-scrollbar-track {
     margin-top: 40px;
 }
 
-.pagination .number {
+.pagination .number a {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -93,7 +93,7 @@ html *::-webkit-scrollbar-track {
     color: #ccc;
 }
 
-.pagination .selected {
+.pagination .selected a {
     display: flex;
     align-items: center;
     justify-content: center;

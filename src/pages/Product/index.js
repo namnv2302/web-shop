@@ -37,12 +37,14 @@ function Product() {
         <div className="mt-[80px]">
             <div className="h-[46px] bg-[#f3f4f6] text-center leading-[46px]">Home / Product</div>
             <div className="flex justify-center mt-[100px] mx-auto">
-                <div className="container flex justify-between px-[16px]">
+                <div className="container flex justify-between items-center px-[16px]">
                     <div className="w-[30%]">
                         <ToastContainer autoClose={1000} />
-                        <img src={state.imageURL} alt={state.name} className="w-full block object-cover" />
+                        <div className="border border-[#eeeded]">
+                            <img src={state.imageURL} alt={state.name} className="w-full block object-cover" />
+                        </div>
                     </div>
-                    <div className="w-[70%] ml-[20px] py-[40px] pl-[40px] cursor-default">
+                    <div className="w-[70%] ml-[20px] py-[10px] pl-[40px] cursor-default">
                         <h4 className="text-[20px] font-semibold text-[#333]">{state.name}</h4>
                         <div className="flex items-center mt-[18px]">
                             <span className="underline text-[red]">5.0</span>

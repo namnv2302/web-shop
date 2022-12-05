@@ -32,7 +32,7 @@ function Card({ product }) {
                 className="w-full mt-[10px] shadow-sm border border-[#f1f1f1] border-solid cursor-pointer hover:translate-y-[-1px]"
             >
                 <img src={product.imageURL} alt={product.name} className="w-full block object-cover" />
-                <div className="p-[10px] bg-white">
+                <div className="flex flex-col justify-between min-h-[134px] p-[10px] bg-white">
                     <h4 className="title-product text-[14px] text-[#333] font-semibold leading-[18px] max-h-[36px] overflow-hidden">
                         {product.name}
                     </h4>

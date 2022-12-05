@@ -21,7 +21,7 @@ function useFirestore(nameCollection, condition) {
         return unsubscribe;
     }, [nameCollection, condition]);
 
-    return value;
+    return value ? value : [];
 }
 
 export default useFirestore;

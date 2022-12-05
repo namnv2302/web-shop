@@ -60,7 +60,8 @@ const registerWithEmailAndPassword = async (name, email, password) => {
 
 const logInWithEmailAndPassword = async (email, password) => {
     try {
-        await signInWithEmailAndPassword(auth, email, password);
+        const user = await signInWithEmailAndPassword(auth, email, password);
+        return user.user;
     } catch (error) {
         console.error(error);
     }

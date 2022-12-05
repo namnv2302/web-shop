@@ -1,18 +1,15 @@
 import { Fragment, useEffect, useState, useRef } from 'react';
-import { onAuthStateChanged } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass, faChevronDown, faSliders } from '@fortawesome/free-solid-svg-icons';
-import { auth } from '~/store/firebase';
-import Card from '~/components/Card';
 import Sidebar from '~/components/Sidebar';
 import Loading from '~/components/Loading';
 import { useProducts, useAuth } from '~/hooks';
 import { sorting } from '~/utils/sorting';
+import CardList from '~/components/CardList';
+import { getAllDocuments } from '~/utils/manageData';
 
 function Shop() {
-    const navigate = useNavigate();
-    const { user } = useAuth();
     const { setProducts, products, isLoading } = useProducts();
     const [active, setActive] = useState(1);
     const [sortValue, setSortValue] = useState('Default sorting');
@@ -22,7 +19,7 @@ function Shop() {
     const oldProductsRef = useRef();
 
     useEffect(() => {
-        oldProductsRef.current = products;
+        getAllDocuments('products').then((result) => (oldProductsRef.current = result));
     }, []);
 
     const handleSorting = (id) => {
@@ -44,13 +41,18 @@ function Shop() {
                 setProducts(newProducts);
                 break;
             case 3:
+                const arrayResult = [];
                 setSortValue('Sort by time');
                 const arraySec = [...oldProductsRef.current].map((item) => item.timeStamp[1]);
-                newProducts = sorting([...oldProductsRef.current], arraySec, 'timeStamp[1]', (a, b) => b - a);
-
+                arraySec.sort((a, b) => b - a);
+                arraySec.forEach((element) => {
+                    const findItem = [...oldProductsRef.current].find((item) => item.timeStamp[1] === element);
+                    arrayResult.push(findItem);
+                });
+                setProducts(arrayResult);
                 break;
             case 4:
-                setSortValue('Sort by remaining');
+                setSortValue('Sort by quantity');
                 const arrayRemain = [...oldProductsRef.current].map((item) => item.quantity);
                 newProducts = sorting([...oldProductsRef.current], arrayRemain, 'quantity', (a, b) => b - a);
 
@@ -67,6 +69,23 @@ function Shop() {
                 throw new Error('Invalid!');
         }
     };
+
+    const handleSearch = () => {
+        if (searchValue.trim()) {
+            const result = oldProductsRef.current.filter((product) =>
+                product.name.toLowerCase().includes(searchValue.toLowerCase()),
+            );
+            setProducts(result);
+        } else {
+            setProducts(oldProductsRef.current);
+        }
+    };
+
+    useEffect(() => {
+        if (!searchValue.trim() && oldProductsRef.current) {
+            setProducts(oldProductsRef.current);
+        }
+    }, [searchValue, setProducts]);
 
     return (
         <Fragment>
@@ -91,7 +110,10 @@ function Shop() {
                                             type="text"
                                             placeholder="Search product ..."
                                         />
-                                        <button className="h-[100%] border-l-[1px] border-[rgb(243 244 246)] hover:bg-[#f1f1f1]">
+                                        <button
+                                            onClick={handleSearch}
+                                            className="h-[100%] border-l-[1px] border-[rgb(243 244 246)] hover:bg-[#f1f1f1]"
+                                        >
                                             <FontAwesomeIcon icon={faMagnifyingGlass} className="px-[16px]" />
                                         </button>
                                     </div>
@@ -142,7 +164,7 @@ function Shop() {
                                                             : 'flex items-center px-[16px] h-[32px]'
                                                     }
                                                 >
-                                                    Sort by remaining
+                                                    Sort by quantity
                                                 </li>
                                                 <li
                                                     onClick={() => handleSorting(5)}
@@ -167,31 +189,7 @@ function Shop() {
                                         <span className="mt-[10px]">No results found</span>
                                     </div>
                                 ) : (
-                                    <div>
-                                        <div className="flex flex-wrap mx-[-10px] mt-[20px]">
-                                            {products
-                                                // .filter((item) =>
-                                                //     item.name.toLowerCase().includes(searchValue.toLowerCase()),
-                                                // )
-                                                .map((product, index) => (
-                                                    <Card key={index} product={product} />
-                                                ))}
-                                        </div>
-                                        <div className="pagination flex items-center justify-center mt-[40px]">
-                                            <span className="active flex items-center justify-center w-[40px] h-[40px] mx-[5px] cursor-pointer text-[18px] text-[#F6AB49] border border-[#F6AB49]">
-                                                1
-                                            </span>
-                                            <span className="flex items-center justify-center w-[40px] h-[40px] mx-[5px] cursor-pointer text-[18px] text-[#F6AB49] border border-[#F6AB49]">
-                                                2
-                                            </span>
-                                            <span className="flex items-center justify-center w-[40px] h-[40px] mx-[5px] cursor-pointer text-[18px] text-[#F6AB49] border border-[#F6AB49]">
-                                                3
-                                            </span>
-                                            <span className="flex items-center justify-center w-[40px] h-[40px] mx-[5px] cursor-pointer text-[14px] text-[#F6AB49] border border-[#F6AB49]">
-                                                >>
-                                            </span>
-                                        </div>
-                                    </div>
+                                    <CardList itemsPerPage={8} />
                                 )}
                             </div>
                         </div>

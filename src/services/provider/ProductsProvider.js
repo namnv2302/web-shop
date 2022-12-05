@@ -12,7 +12,7 @@ function ProductsProvider({ children }) {
     const arrayProducts = useFirestore('products');
     useEffect(() => {
         setIsLoading(true);
-        if (arrayProducts) {
+        if (arrayProducts.length > 0) {
             setProducts(arrayProducts);
             setIsLoading(false);
         }
