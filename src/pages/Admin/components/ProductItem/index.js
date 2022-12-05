@@ -95,60 +95,78 @@ function ProductItem({ product }) {
                     <div className="flex h-[100%] items-center justify-center">
                         <div className="relative w-[40%] p-[20px] border-[1px] border-solid border-[#ccc] bg-[#fff]">
                             <h3 className="text-[20px] font-semibold text-center mb-[14px]">Update product</h3>
-                            <input
-                                value={imageURL}
-                                onChange={(e) => setImageURL(e.target.value)}
-                                type="text"
-                                required
-                                autoComplete="off"
-                                className="w-full px-[14px] py-[4px] mb-[12px] border-[1px] border-solid border-[#ccc] text-[16px] font-medium"
-                                placeholder="Enter imageURL..."
-                            />
-                            <input
-                                value={name}
-                                onChange={(e) => setName(e.target.value)}
-                                type="text"
-                                required
-                                autoComplete="off"
-                                className="w-full px-[14px] py-[4px] mb-[12px] border-[1px] border-solid border-[#ccc] text-[16px] font-medium"
-                                placeholder="Enter name..."
-                            />
-                            <input
-                                value={pet}
-                                onChange={(e) => setPet(e.target.value)}
-                                type="text"
-                                required
-                                autoComplete="off"
-                                className="w-full px-[14px] py-[4px] mb-[12px] border-[1px] border-solid border-[#ccc] text-[16px] font-medium"
-                                placeholder="Enter pet..."
-                            />
-                            <input
-                                value={brand}
-                                onChange={(e) => setBrand(e.target.value)}
-                                type="text"
-                                required
-                                autoComplete="off"
-                                className="w-full px-[14px] py-[4px] mb-[12px] border-[1px] border-solid border-[#ccc] text-[16px] font-medium"
-                                placeholder="Enter brand..."
-                            />
-                            <input
-                                value={price}
-                                onChange={(e) => setPrice(e.target.value)}
-                                type="text"
-                                required
-                                autoComplete="off"
-                                className="w-full px-[14px] py-[4px] mb-[12px] border-[1px] border-solid border-[#ccc] text-[16px] font-medium"
-                                placeholder="Enter price..."
-                            />
-                            <input
-                                value={quantity}
-                                onChange={(e) => setQuantity(e.target.value)}
-                                type="text"
-                                required
-                                autoComplete="off"
-                                className="w-full px-[14px] py-[4px] mb-[12px] border-[1px] border-solid border-[#ccc] text-[16px] font-medium"
-                                placeholder="Enter quantity..."
-                            />
+                            <div className="flex items-center mb-[12px]">
+                                <label className="min-w-[80px] text-[#000] font-semibold">ImageUrl</label>
+                                <input
+                                    value={imageURL}
+                                    onChange={(e) => setImageURL(e.target.value)}
+                                    type="text"
+                                    required
+                                    autoComplete="off"
+                                    className="w-full px-[14px] py-[4px] border-[1px] border-solid border-[#ccc] text-[16px] font-medium"
+                                    placeholder="Enter imageURL..."
+                                />
+                            </div>
+                            <div className="flex items-center mb-[12px]">
+                                <label className="min-w-[80px] text-[#000] font-semibold">Name</label>
+                                <input
+                                    value={name}
+                                    onChange={(e) => setName(e.target.value)}
+                                    type="text"
+                                    required
+                                    autoComplete="off"
+                                    className="w-full px-[14px] py-[4px] border-[1px] border-solid border-[#ccc] text-[16px] font-medium"
+                                    placeholder="Enter name..."
+                                />
+                            </div>
+                            <div className="flex items-center mb-[12px]">
+                                <label className="min-w-[80px] text-[#000] font-semibold">Pet</label>
+                                <input
+                                    value={pet}
+                                    onChange={(e) => setPet(e.target.value)}
+                                    type="text"
+                                    required
+                                    autoComplete="off"
+                                    className="w-full px-[14px] py-[4px] border-[1px] border-solid border-[#ccc] text-[16px] font-medium"
+                                    placeholder="Enter pet..."
+                                />
+                            </div>
+                            <div className="flex items-center mb-[12px]">
+                                <label className="min-w-[80px] text-[#000] font-semibold">Brand</label>
+                                <input
+                                    value={brand}
+                                    onChange={(e) => setBrand(e.target.value)}
+                                    type="text"
+                                    required
+                                    autoComplete="off"
+                                    className="w-full px-[14px] py-[4px] border-[1px] border-solid border-[#ccc] text-[16px] font-medium"
+                                    placeholder="Enter brand..."
+                                />
+                            </div>
+                            <div className="flex items-center mb-[12px]">
+                                <label className="min-w-[80px] text-[#000] font-semibold">Price</label>
+                                <input
+                                    value={price}
+                                    onChange={(e) => setPrice(e.target.value)}
+                                    type="text"
+                                    required
+                                    autoComplete="off"
+                                    className="w-full px-[14px] py-[4px] border-[1px] border-solid border-[#ccc] text-[16px] font-medium"
+                                    placeholder="Enter price..."
+                                />
+                            </div>
+                            <div className="flex items-center mb-[12px]">
+                                <label className="min-w-[80px] text-[#000] font-semibold">Quantity</label>
+                                <input
+                                    value={quantity}
+                                    onChange={(e) => setQuantity(e.target.value)}
+                                    type="text"
+                                    required
+                                    autoComplete="off"
+                                    className="w-full px-[14px] py-[4px] mb-[12px] border-[1px] border-solid border-[#ccc] text-[16px] font-medium"
+                                    placeholder="Enter quantity..."
+                                />
+                            </div>
                             <div
                                 onClick={handleUpdate}
                                 className="cursor-pointer flex justify-center items-center text-[20px] font-medium w-full text-center h-[32px] mt-[12px] mb-[10px] border-[1px] border-solid border-[#16a3b7] hover:opacity-90"

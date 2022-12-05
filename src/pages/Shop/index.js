@@ -1,17 +1,18 @@
 import { Fragment, useEffect, useState, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass, faChevronDown, faSliders } from '@fortawesome/free-solid-svg-icons';
 import Sidebar from '~/components/Sidebar';
 import Loading from '~/components/Loading';
-import { useProducts, useAuth } from '~/hooks';
+import { useProducts } from '~/hooks';
 import { sorting } from '~/utils/sorting';
 import CardList from '~/components/CardList';
 import { getAllDocuments } from '~/utils/manageData';
+import SortOptions from '~/components/SortOptions';
 
 function Shop() {
     const { setProducts, products, isLoading } = useProducts();
     const [active, setActive] = useState(1);
+    const [isChoosed, setIsChoosed] = useState(false);
     const [sortValue, setSortValue] = useState('Default sorting');
     const [isOpenSortOption, setIsOpenSortOption] = useState(false);
     const [searchValue, setSearchValue] = useState('');
@@ -25,6 +26,7 @@ function Shop() {
     const handleSorting = (id) => {
         setActive(id);
         setIsOpenSortOption(false);
+        setIsChoosed(!isChoosed);
         let newProducts = [];
         switch (id) {
             case 1:
@@ -36,7 +38,11 @@ function Shop() {
             case 2:
                 setSortValue('Sort by price');
                 const arrayPrice = [...oldProductsRef.current].map((item) => item.price);
-                newProducts = sorting([...oldProductsRef.current], arrayPrice, 'price', (a, b) => b - a);
+                if (isChoosed) {
+                    newProducts = sorting([...oldProductsRef.current], arrayPrice, 'price', (a, b) => a - b);
+                } else {
+                    newProducts = sorting([...oldProductsRef.current], arrayPrice, 'price', (a, b) => b - a);
+                }
 
                 setProducts(newProducts);
                 break;
@@ -44,24 +50,40 @@ function Shop() {
                 const arrayResult = [];
                 setSortValue('Sort by time');
                 const arraySec = [...oldProductsRef.current].map((item) => item.timeStamp[1]);
-                arraySec.sort((a, b) => b - a);
-                arraySec.forEach((element) => {
-                    const findItem = [...oldProductsRef.current].find((item) => item.timeStamp[1] === element);
-                    arrayResult.push(findItem);
-                });
+                if (isChoosed) {
+                    arraySec.sort((a, b) => a - b);
+                    arraySec.forEach((element) => {
+                        const findItem = [...oldProductsRef.current].find((item) => item.timeStamp[1] === element);
+                        arrayResult.push(findItem);
+                    });
+                } else {
+                    arraySec.sort((a, b) => b - a);
+                    arraySec.forEach((element) => {
+                        const findItem = [...oldProductsRef.current].find((item) => item.timeStamp[1] === element);
+                        arrayResult.push(findItem);
+                    });
+                }
                 setProducts(arrayResult);
                 break;
             case 4:
                 setSortValue('Sort by quantity');
                 const arrayRemain = [...oldProductsRef.current].map((item) => item.quantity);
-                newProducts = sorting([...oldProductsRef.current], arrayRemain, 'quantity', (a, b) => b - a);
+                if (isChoosed) {
+                    newProducts = sorting([...oldProductsRef.current], arrayRemain, 'quantity', (a, b) => a - b);
+                } else {
+                    newProducts = sorting([...oldProductsRef.current], arrayRemain, 'quantity', (a, b) => b - a);
+                }
 
                 setProducts(newProducts);
                 break;
             case 5:
                 setSortValue('Sort by sold');
                 const arraySold = [...oldProductsRef.current].map((item) => item.sold);
-                newProducts = sorting([...oldProductsRef.current], arraySold, 'sold', (a, b) => b - a);
+                if (isChoosed) {
+                    newProducts = sorting([...oldProductsRef.current], arraySold, 'sold', (a, b) => a - b);
+                } else {
+                    newProducts = sorting([...oldProductsRef.current], arraySold, 'sold', (a, b) => b - a);
+                }
 
                 setProducts(newProducts);
                 break;
@@ -124,60 +146,7 @@ function Shop() {
                                         <span className="text-[16px] font-medium text-[#000]">{sortValue}</span>
                                         <FontAwesomeIcon className="text-[14px]" icon={faChevronDown} />
 
-                                        {isOpenSortOption && (
-                                            <ul className="absolute z-10 top-[118%] left-[-1px] right-[-1px] py-[6px] bg-[#fff] border border-solid">
-                                                <li
-                                                    onClick={() => handleSorting(1)}
-                                                    className={
-                                                        active === 1
-                                                            ? 'flex items-center px-[16px] h-[32px] active'
-                                                            : 'flex items-center px-[16px] h-[32px]'
-                                                    }
-                                                >
-                                                    Default sorting
-                                                </li>
-                                                <li
-                                                    onClick={() => handleSorting(2)}
-                                                    className={
-                                                        active === 2
-                                                            ? 'flex items-center px-[16px] h-[32px] active'
-                                                            : 'flex items-center px-[16px] h-[32px]'
-                                                    }
-                                                >
-                                                    Sort by price
-                                                </li>
-                                                <li
-                                                    onClick={() => handleSorting(3)}
-                                                    className={
-                                                        active === 3
-                                                            ? 'flex items-center px-[16px] h-[32px] active'
-                                                            : 'flex items-center px-[16px] h-[32px]'
-                                                    }
-                                                >
-                                                    Sort by time
-                                                </li>
-                                                <li
-                                                    onClick={() => handleSorting(4)}
-                                                    className={
-                                                        active === 4
-                                                            ? 'flex items-center px-[16px] h-[32px] active'
-                                                            : 'flex items-center px-[16px] h-[32px]'
-                                                    }
-                                                >
-                                                    Sort by quantity
-                                                </li>
-                                                <li
-                                                    onClick={() => handleSorting(5)}
-                                                    className={
-                                                        active === 5
-                                                            ? 'flex items-center px-[16px] h-[32px] active'
-                                                            : 'flex items-center px-[16px] h-[32px]'
-                                                    }
-                                                >
-                                                    Sort by sold
-                                                </li>
-                                            </ul>
-                                        )}
+                                        {isOpenSortOption && <SortOptions active={active} onSorting={handleSorting} />}
                                     </div>
                                 </div>
 
