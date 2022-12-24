@@ -2,7 +2,7 @@
 
 An online shopping application built using Reactjs, Tailwind and Firebase.
 
-View to shop [Petdy](https://petdy-shop.vercel.app/)
+<strong>View to shop</strong> [Petdy](https://petdy-shop.vercel.app/)
 
 ## Preview
 
