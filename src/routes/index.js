@@ -3,12 +3,14 @@ import Shop from '~/pages/Shop';
 import Product from '~/pages/Product';
 import Cart from '~/pages/Cart';
 import Admin from '~/pages/Admin';
+import Profile from '~/pages/Profile';
 import Login from '~/auth/pages/Login';
 import Register from '~/auth/pages/Register';
 import Logout from '~/auth/pages/Logout';
 
 const publicRoutes = [
     { path: '/shop', component: Shop },
+    { path: '/profile', component: Profile },
     { path: '/product/:id', component: Product },
     { path: '/cart', component: Cart },
     { path: '/register', component: Register },

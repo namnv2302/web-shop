@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartShopping, faStar } from '@fortawesome/free-solid-svg-icons';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 import { addDocument, updateDocument } from '~/utils/manageData';
 import { useAuth, useProducts } from '~/hooks';
 import icons from '~/assets/icons';
@@ -18,10 +18,10 @@ function Product() {
         if (Object.keys(user).length) {
             const choosedItem = productsChoosed.find((item) => item.id === state.id);
             if (choosedItem) {
-                updateDocument('cart', `${choosedItem.id}`, { count: choosedItem.count + count });
+                updateDocument('carts', `${choosedItem.id}`, { count: choosedItem.count + count });
                 toast.success('Add to cart successfully!');
             } else {
-                addDocument('cart', {
+                addDocument('carts', {
                     ...state,
                     count: count,
                     uid: user.uid,
@@ -39,7 +39,6 @@ function Product() {
             <div className="flex justify-center mt-[100px] mx-auto">
                 <div className="container flex justify-between items-center px-[16px]">
                     <div className="w-[30%]">
-                        <ToastContainer autoClose={1000} />
                         <div className="border border-[#eeeded]">
                             <img src={state.imageURL} alt={state.name} className="w-full block object-cover" />
                         </div>

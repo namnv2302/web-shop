@@ -19,12 +19,12 @@ function CartItem({ product }) {
     }, [count, setCount]);
     useEffect(() => {
         const currentItem = productsChoosed.find((item) => item.id === product.id);
-        updateDocument('cart', `${currentItem.id}`, { count: count });
+        updateDocument('carts', `${currentItem.id}`, { count: count });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [count]);
 
     const handleDelete = (id) => {
-        deleteFieldsDoc('cart', id, 'uid');
+        deleteFieldsDoc('carts', id, 'uid');
     };
 
     return (

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import images from '~/assets/images';
-import { signInWithGoogle, logInWithEmailAndPassword } from '~/services/auth';
+import { signInWithGoogle, signInWithFacebook, logInWithEmailAndPassword } from '~/services/auth';
 import { useAuth } from '~/hooks';
 
 function Login() {
@@ -11,19 +11,27 @@ function Login() {
     const [password, setPassword] = useState('');
     const { user } = useAuth();
 
-    useEffect(() => {
+    const handleLogin = async (email, password) => {
+        const user = await logInWithEmailAndPassword(email, password);
         if (Object.keys(user).length) {
             navigate('/shop');
             toast.success('Login successfully!');
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [user]);
-
-    const handleLogin = async (email, password) => {
-        const user = await logInWithEmailAndPassword(email, password);
         if (user.uid === '0XDkTIzK7QPwpjX6tffc2062i8q1') {
             navigate('/admin');
         }
+    };
+
+    const handleSignInWithGoogle = async () => {
+        await signInWithGoogle();
+        navigate('/shop');
+        toast.success('Login successfully!');
+    };
+
+    const handleSignInWithFacebook = async () => {
+        await signInWithFacebook();
+        navigate('/shop');
+        toast.success('Login successfully!');
     };
 
     return (
@@ -63,10 +71,17 @@ function Login() {
                         Register
                     </div>
                     <div className="flex items-center justify-center mt-[20px]">
-                        <div className="flex items-center ">
+                        <div className="flex items-center">
                             <span className="text-[16px] font-medium">Don't have an account</span>
-                            <div className="block" onClick={signInWithGoogle}>
+                            <div className="block" onClick={handleSignInWithGoogle}>
                                 <img src={images.iconGoogle} alt="Google" className="ml-[8px] cursor-pointer" />
+                            </div>
+                            <div className="block" onClick={handleSignInWithFacebook}>
+                                <img
+                                    src={images.iconFacebook}
+                                    alt="Facebook"
+                                    className="ml-[8px] w-[22px] h-[22px] cursor-pointer"
+                                />
                             </div>
                         </div>
                     </div>

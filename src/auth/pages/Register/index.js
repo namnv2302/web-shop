@@ -12,13 +12,11 @@ function Register() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    useEffect(() => {
-        if (Object.keys(user).length) {
-            navigate('/shop');
-            toast.info('Register successfully!');
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [user]);
+    const handleRegister = async (name, email, password) => {
+        await registerWithEmailAndPassword(name, email, password);
+        navigate('/shop');
+        toast.info('Register successfully!');
+    };
 
     return (
         <div className="mt-[80px]">
@@ -54,7 +52,7 @@ function Register() {
                         placeholder="Enter password..."
                     />
                     <div
-                        onClick={() => registerWithEmailAndPassword(name, email, password)}
+                        onClick={() => handleRegister(name, email, password)}
                         className="cursor-pointer flex justify-center items-center text-[20px] font-medium w-full text-center h-[42px] mt-[22px] mb-[18px] border-[1px] border-solid border-[#16a3b7] hover:opacity-90"
                     >
                         Register

@@ -139,6 +139,7 @@ function Shop() {
                                             <FontAwesomeIcon icon={faMagnifyingGlass} className="px-[16px]" />
                                         </button>
                                     </div>
+
                                     <div
                                         onClick={() => setIsOpenSortOption(!isOpenSortOption)}
                                         className="relative flex items-center justify-between w-[228px] h-[40px] px-[16px] border border-solid cursor-pointer"

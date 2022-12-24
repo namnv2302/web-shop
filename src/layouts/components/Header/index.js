@@ -31,7 +31,7 @@ function Header() {
             <div className="container flex items-center">
                 <div className="w-[100%] h-[80px] flex justify-between px-[16px] my-[0]">
                     <div className="flex items-center w-[86px]">
-                        <ToastContainer autoClose={1000} />
+                        <ToastContainer autoClose={1500} />
                         <div className="block cursor-pointer" onClick={() => navigate('/')}>
                             <img src={images.logo} alt="Logo" className="block w-full" />
                         </div>
@@ -106,10 +106,15 @@ function Header() {
                                 {isOpenUserOption &&
                                     (Object.keys(user).length ? (
                                         <div className="absolute z-10 mt-[26px] shadow-md top-[100%] right-0 min-w-[250px] bg-[#fff] rounded-[4px] profile-children text-[14px] font-medium text-[#000] ">
-                                            <div className="px-[16px] py-[14px] border-b border-[#eee]">
+                                            <div className="border-b border-[#eee]">
                                                 <span className="absolute top-[-3px] right-0 block h-[3px] w-[40px] bg-[#F6AB49]"></span>
-                                                <span className="block mb-[6px] font-semibold">Hello friend!</span>
-                                                <span className="flex items-end">
+                                                <span className="block mt-[14px] mx-[16px] mb-[4px] font-semibold cursor-default">
+                                                    Hello friend!
+                                                </span>
+                                                <span
+                                                    onClick={() => navigate('/profile')}
+                                                    className="flex items-end py-[6px] px-[16px] mb-[10px] cursor-pointer hover:bg-[#f3f4f6]"
+                                                >
                                                     <img
                                                         className="w-[28px] h-[28px] rounded-full object-cover"
                                                         src={
@@ -126,19 +131,19 @@ function Header() {
                                             <div className="my-[6px]">
                                                 <span
                                                     onClick={() => navigate('/shop')}
-                                                    className="block px-[16px] py-[6px] cursor-pointer"
+                                                    className="block px-[16px] py-[6px] cursor-pointer hover:bg-[#f3f4f6]"
                                                 >
                                                     Collections
                                                 </span>
                                                 <span
                                                     onClick={() => navigate('/cart')}
-                                                    className="block px-[16px] py-[6px] cursor-pointer"
+                                                    className="block px-[16px] py-[6px] cursor-pointer hover:bg-[#f3f4f6]"
                                                 >
                                                     Cart
                                                 </span>
                                                 <span
                                                     onClick={handleLogout}
-                                                    className="block px-[16px] py-[6px] cursor-pointer"
+                                                    className="block px-[16px] py-[6px] cursor-pointer hover:bg-[#f3f4f6]"
                                                 >
                                                     Logout
                                                 </span>

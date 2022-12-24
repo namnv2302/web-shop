@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { v4 } from 'uuid';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 import { CartIcon } from '~/components/Icons';
 import { useProducts, useAuth } from '~/hooks';
 import CartItem from '~/components/CartItem';
@@ -24,13 +24,14 @@ function Cart() {
 
     const handleOrder = () => {
         const orderList = [...productsChoosed];
-        addDocument('order', {
+        addDocument('orders', {
             id: v4(),
+            uid: user.uid,
             items: orderList,
             total: total,
         });
         orderList.forEach((item) => {
-            deleteFieldsDoc('cart', `${item.id}`, 'uid');
+            deleteFieldsDoc('carts', `${item.id}`, 'uid');
         });
         setIsOrderPlaced(true);
         toast.success('Order placed successfully');
@@ -116,7 +117,6 @@ function Cart() {
             ) : (
                 <OrderPlaced />
             )}
-            <ToastContainer autoClose={1000} />
         </div>
     );
 }
