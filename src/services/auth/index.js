@@ -125,20 +125,27 @@ const updatePwd = async (newPwd, currentPwd) => {
         await updatePassword(auth.currentUser, newPwd);
         toast.info('Update successfully!');
     } catch (error) {
-        toast.error('Wrong password');
+        toast.error('Wrong password!');
     }
 };
 
 const upload = async (displayName, file, setPhotoUrl, user, setUser) => {
-    const fileRef = ref(storage, auth.currentUser.uid + '.png');
-    await uploadBytes(fileRef, file);
-    const photoUrl = await getDownloadURL(fileRef);
-    setUser({ ...user, displayName: displayName, photoURL: photoUrl });
-    setPhotoUrl(photoUrl);
-    await updateInfo({
-        displayName: displayName,
-        photoURL: photoUrl,
-    });
+    if (file) {
+        const fileRef = ref(storage, auth.currentUser.uid + '.png');
+        await uploadBytes(fileRef, file);
+        const photoUrl = await getDownloadURL(fileRef);
+        setUser({ ...user, photoURL: photoUrl });
+        setPhotoUrl(photoUrl);
+        await updateInfo({
+            photoURL: photoUrl,
+        });
+    }
+    if (displayName) {
+        setUser({ ...user, displayName: displayName });
+        await updateInfo({
+            displayName: displayName,
+        });
+    }
 };
 
 export {

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { toast } from 'react-toastify';
 import { useAuth } from '~/hooks';
 import { upload } from '~/services/auth';
@@ -10,6 +10,7 @@ function FormInfo() {
     const [isEdit, setIsEdit] = useState(false);
     const [isChange, setIsChange] = useState(false);
     const [photo, setPhoto] = useState(null);
+    const ref = useRef(user.displayName);
     const [photoUrl, setPhotoUrl] = useState(() => {
         return user?.photoURL ? user.photoURL : images.noImage;
     });
@@ -20,7 +21,7 @@ function FormInfo() {
     });
 
     useEffect(() => {
-        photo && displayName && setIsChange(true);
+        (photo || displayName) && setIsChange(true);
     }, [photo, displayName]);
 
     const handleChange = (e) => {
@@ -36,11 +37,15 @@ function FormInfo() {
         e.preventDefault();
 
         if (isEdit) {
-            if (photo && isChange) {
+            if (isChange) {
                 await upload(displayName, photo, setPhotoUrl, user, setUser);
                 URL.revokeObjectURL(photoUrl);
-                toast.info('Update successfully!');
                 setIsChange(false);
+                if (ref.current === displayName) {
+                    setIsEdit(false);
+                    return;
+                }
+                toast.info('Update successfully!');
             }
             setIsEdit(false);
         } else {

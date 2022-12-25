@@ -22,8 +22,12 @@ function FormPassword() {
                 setNewPassword('');
                 setCurrentPassword('');
                 setIsChange(false);
+                setIsEdit(false);
+            } else {
+                setNewPassword('');
+                setCurrentPassword('');
+                toast.info('Please complete all information!');
             }
-            setIsEdit(false);
         } else {
             setIsEdit(true);
         }
@@ -38,6 +42,7 @@ function FormPassword() {
                 <input
                     id="current-pwd"
                     type="password"
+                    required
                     value={currentPassword}
                     disabled={!isEdit}
                     autoComplete="off"
@@ -53,6 +58,7 @@ function FormPassword() {
                 <input
                     id="new-pwd"
                     type="password"
+                    required
                     value={newPassword}
                     disabled={!isEdit}
                     autoComplete="off"
