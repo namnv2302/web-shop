@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useLayoutEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartShopping, faStar } from '@fortawesome/free-solid-svg-icons';
@@ -13,6 +13,12 @@ function Product() {
     const { user } = useAuth();
     const { productsChoosed } = useProducts();
     const [count, setCount] = useState(1);
+
+    useLayoutEffect(() => {
+        if(count <= 0) {
+            setCount(1)
+        }
+    }, [count])
 
     const handleAddCart = () => {
         if (Object.keys(user).length) {
@@ -72,39 +78,6 @@ function Product() {
                                 <span className="text-[20px] text-[#767676] font-medium">{state.createdAt.toDate}</span>
                             </span>
                         </span>
-                        {/* <div className="flex items-center mt-[20px]">
-                            <span className="">Taste</span>
-                            <div className="flex ml-[20px]">
-                                <span
-                                    onClick={() => setChooseTaste('Bò')}
-                                    className="cursor-pointer hover:opacity-[0.6] text-[16px] p-[4px] border-[1px] mx-[10px]"
-                                >
-                                    Bò
-                                </span>
-                                <span
-                                    onClick={() => setChooseTaste('Gà')}
-                                    className="cursor-pointer hover:opacity-[0.6] text-[16px] p-[4px] border-[1px] mx-[10px]"
-                                >
-                                    Gà
-                                </span>
-                                <span
-                                    onClick={() => setChooseTaste('Cá')}
-                                    className="cursor-pointer hover:opacity-[0.6] text-[16px] p-[4px] border-[1px] mx-[10px]"
-                                >
-                                    Cá
-                                </span>
-                                <span
-                                    onClick={() => setChooseTaste('Phô Mai')}
-                                    className="cursor-pointer hover:opacity-[0.6] text-[16px] p-[4px] border-[1px] mx-[10px]"
-                                >
-                                    Phô Mai
-                                </span>
-                            </div>
-                            <span className="ml-[20px] text-[#767676] text-[14px]">
-                                {state.quantity} sản phẩm có sẵn
-                            </span>
-                        </div>
-                        <span>Please select a size</span> */}
                         <div className="flex items-center mt-[20px]">
                             <span>Số lượng</span>
                             <div className="flex items-center ml-[20px] border-[1px]">
