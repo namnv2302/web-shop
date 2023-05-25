@@ -1,0 +1,57 @@
+{
+    "Login": "Đăng nhập",
+    "Register": "Đăng ký",
+    "Navigation": {
+        "Home": "Trang chủ",
+        "Shop": "Cửa hàng",
+        "Pages": "Pages",
+        "Blog": "Blog",
+        "About": "About",
+        "Contact": "Liên hệ"
+    },
+    "Footer": {
+        "About": {
+            "Title": "Về chúng tôi"
+        },
+        "Useful": {
+            "Title": "Hữu ích",
+            "List": {
+                "Item1": "Giúp đỡ & Liên hệ",
+                "Item2": "Trả lại & Hoàn tiền",
+                "Item3": "Cửa hàng trực tuyến",
+                "Item4": "Điều khoản & Điều kiện"
+            }
+        },
+        "Help": {
+            "Title": "Giúp đỡ",
+            "Wishlist": "Yêu thích",
+            "PricingPlans": "Kế hoạch giảm giá",
+            "OrderTraking": "Theo dõi đơn hàng",
+            "Returns": "Trả lại"
+        },
+        "Send": {
+            "Title": "Gửi bản tin",
+            "Desc": "Đăng ký nhận bản tin của chúng tôi và nhận 10% cho lần mua hàng đầu tiên của bạn..",
+            "Button": "Gửi"
+        },
+        "Copyright": "Được tạo bởi"
+    },
+    "RequireLogin": {
+        "Title": "Bạn phải đăng nhập",
+        "Description": "Đăng nhập để xem các mặt hàng trong giỏ hàng",
+        "Login": "Đăng nhập",
+        "Register": "Đăng ký"
+    },
+    "Success": {
+        "Login": "Đăng nhập thành công!",
+        "AddCart": "Thêm vào giỏ hàng thành công!",
+        "Order": "Đặt hàng thành công",
+        "Update": "Cập nhật thành công!"
+    },
+    "Error": {
+        "EmailPassword": "Email hoặc mật khẩu không đúng",
+        "Password": "Mật khẩu chính xác"
+    },
+    "SoldOut": "Hết hàng",
+    "MaxQuantity": "Số lượng vượt quá sản phẩm hiện có"
+}

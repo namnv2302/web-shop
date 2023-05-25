@@ -10,6 +10,7 @@ import {
     faPenToSquare,
     faLock,
 } from '@fortawesome/free-solid-svg-icons';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '~/hooks';
 import { logout } from '~/services/auth';
@@ -19,6 +20,7 @@ import FormInfo from './components/FormInfo';
 import FormPassword from './components/FormPassword';
 
 function Profile() {
+    const { t } = useTranslation('Profile');
     const navigate = useNavigate();
     const { setUser, user } = useAuth();
     const [tabIndex, setTabIndex] = useState(1);
@@ -41,9 +43,15 @@ function Profile() {
         setUser({});
     };
 
+    useEffect(() => {
+        if (!Object.keys(user).length) {
+            navigate('/');
+        }
+    }, [user, navigate]);
+
     return (
         <div className="mt-[80px]">
-            <div className="h-[46px] bg-[#f3f4f6] text-center leading-[46px]">Home / Profile</div>
+            <div className="h-[46px] bg-[#f3f4f6] text-center leading-[46px]">{t('Breadcrumb')}</div>
             <div className="flex justify-center mt-[100px] mx-auto">
                 <div className="container flex justify-between items-start px-[16px]">
                     <div className="w-[20%]">
@@ -57,7 +65,7 @@ function Profile() {
                                 }
                             >
                                 <FontAwesomeIcon icon={faGauge} />
-                                <span className="ml-[10px]">Dashboard</span>
+                                <span className="ml-[10px]">{t('Options.Dashboard')}</span>
                             </li>
                             <li
                                 onClick={() => handleChangeTab(2)}
@@ -68,7 +76,7 @@ function Profile() {
                                 }
                             >
                                 <FontAwesomeIcon icon={faCartShopping} />
-                                <span className="ml-[10px]">Orders</span>
+                                <span className="ml-[10px]">{t('Options.Orders')}</span>
                             </li>
                             <li
                                 onClick={() => handleChangeTab(3)}
@@ -79,7 +87,7 @@ function Profile() {
                                 }
                             >
                                 <FontAwesomeIcon icon={faCreditCard} />
-                                <span className="ml-[10px]">Payment Method</span>
+                                <span className="ml-[10px]">{t('Options.PaymentMethod')}</span>
                             </li>
                             <li
                                 onClick={() => handleChangeTab(4)}
@@ -90,7 +98,7 @@ function Profile() {
                                 }
                             >
                                 <FontAwesomeIcon icon={faLocationDot} />
-                                <span className="ml-[10px]">Address</span>
+                                <span className="ml-[10px]">{t('Options.Address')}</span>
                             </li>
                             <li
                                 onClick={() => handleChangeTab(5)}
@@ -101,7 +109,7 @@ function Profile() {
                                 }
                             >
                                 <FontAwesomeIcon icon={faUser} />
-                                <span className="ml-[10px]">Account Details</span>
+                                <span className="ml-[10px]">{t('Options.AccountDetails')}</span>
                             </li>
                             <li
                                 onClick={() => handleChangeTab(6)}
@@ -112,20 +120,20 @@ function Profile() {
                                 }
                             >
                                 <FontAwesomeIcon icon={faLock} />
-                                <span className="ml-[10px]">Password</span>
+                                <span className="ml-[10px]">{t('Options.Password')}</span>
                             </li>
                             <li
                                 onClick={handleLogout}
                                 className="hover:bg-[#F6AB49] hover:text-[#fff] cursor-pointer py-[10px] px-[18px] text-[#000] font-semibold border border-[#ebebeb] border-t-0"
                             >
                                 <FontAwesomeIcon icon={faSignOut} />
-                                <span className="ml-[10px]">Logout</span>
+                                <span className="ml-[10px]">{t('Options.Logout')}</span>
                             </li>
                         </ul>
                     </div>
                     <div className="w-[80%] ml-[30px]">
                         {tabIndex === 1 && (
-                            <Content title="Dashboard">
+                            <Content title={t('Options.Dashboard')}>
                                 <p className="text-[16px] text-[#555] mb-[5px]">
                                     Hello, <span className="text-[#F6AB49] font-semibold">{user.displayName}</span> (If
                                     Not{' '}
@@ -141,19 +149,19 @@ function Profile() {
                             </Content>
                         )}
                         {tabIndex === 2 && (
-                            <Content title="Orders">
+                            <Content title={t('Options.Orders')}>
                                 <OrderList itemsPerPage={5} />
                             </Content>
                         )}
                         {tabIndex === 3 && (
-                            <Content title="Payment Method">
+                            <Content title={t('Options.PaymentMethod')}>
                                 <p className="text-[#666666] p-[20px] font-semibold rounded-t-[5px] rounded-r-[5px] bg-[#ebebeb] border-t-[3px] border-t-[#f6ab49]">
                                     You Can't Saved Your Payment Method yet.
                                 </p>
                             </Content>
                         )}
                         {tabIndex === 4 && (
-                            <Content title="Billing Address">
+                            <Content title={t('Options.Address')}>
                                 <p className="text-[#555] font-semibold mb-[16px]">Alex Aya</p>
                                 <p className="mb-[16px]">
                                     1234 Market ##, Suite 900 <br /> Lorem Ipsum, ## 12345
@@ -166,12 +174,12 @@ function Profile() {
                             </Content>
                         )}
                         {tabIndex === 5 && (
-                            <Content title="Account Details">
+                            <Content title={t('Options.AccountDetails')}>
                                 <FormInfo />
                             </Content>
                         )}
                         {tabIndex === 6 && (
-                            <Content title="Password change">
+                            <Content title={t('Options.Password')}>
                                 <FormPassword />
                             </Content>
                         )}

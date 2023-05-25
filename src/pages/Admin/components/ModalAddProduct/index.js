@@ -35,6 +35,7 @@ function ModalAddProduct({ setIsOpenModalCreate }) {
             <div className="flex h-[100%] items-center justify-center">
                 <div className="relative w-[40%] p-[20px] border-[1px] border-solid border-[#ccc] bg-[#fff]">
                     <h3 className="text-[20px] font-semibold text-center mb-[14px]">New product</h3>
+                    <p className="text-[15px] text-[#212529] font-semibold mb-[4px]">Image address</p>
                     <input
                         value={imageURL}
                         onChange={(e) => setImageURL(e.target.value)}
@@ -42,8 +43,8 @@ function ModalAddProduct({ setIsOpenModalCreate }) {
                         required
                         autoComplete="off"
                         className="w-full px-[14px] py-[4px] mb-[12px] border-[1px] border-solid border-[#ccc] text-[16px] font-medium"
-                        placeholder="Enter imageURL..."
                     />
+                    <p className="text-[15px] text-[#212529] font-semibold mb-[4px]">Name</p>
                     <input
                         value={name}
                         onChange={(e) => setName(e.target.value)}
@@ -51,8 +52,8 @@ function ModalAddProduct({ setIsOpenModalCreate }) {
                         required
                         autoComplete="off"
                         className="w-full px-[14px] py-[4px] mb-[12px] border-[1px] border-solid border-[#ccc] text-[16px] font-medium"
-                        placeholder="Enter name..."
                     />
+                    <p className="text-[15px] text-[#212529] font-semibold mb-[4px]">Pet</p>
                     <input
                         value={pet}
                         onChange={(e) => setPet(e.target.value)}
@@ -60,8 +61,8 @@ function ModalAddProduct({ setIsOpenModalCreate }) {
                         required
                         autoComplete="off"
                         className="w-full px-[14px] py-[4px] mb-[12px] border-[1px] border-solid border-[#ccc] text-[16px] font-medium"
-                        placeholder="Enter pet..."
                     />
+                    <p className="text-[15px] text-[#212529] font-semibold mb-[4px]">Brand</p>
                     <input
                         value={brand}
                         onChange={(e) => setBrand(e.target.value)}
@@ -69,8 +70,8 @@ function ModalAddProduct({ setIsOpenModalCreate }) {
                         required
                         autoComplete="off"
                         className="w-full px-[14px] py-[4px] mb-[12px] border-[1px] border-solid border-[#ccc] text-[16px] font-medium"
-                        placeholder="Enter brand..."
                     />
+                    <p className="text-[15px] text-[#212529] font-semibold mb-[4px]">Price</p>
                     <input
                         value={price}
                         onChange={(e) => setPrice(e.target.value)}
@@ -78,8 +79,8 @@ function ModalAddProduct({ setIsOpenModalCreate }) {
                         required
                         autoComplete="off"
                         className="w-full px-[14px] py-[4px] mb-[12px] border-[1px] border-solid border-[#ccc] text-[16px] font-medium"
-                        placeholder="Enter price..."
                     />
+                    <p className="text-[15px] text-[#212529] font-semibold mb-[4px]">Quantity</p>
                     <input
                         value={quantity}
                         onChange={(e) => setQuantity(e.target.value)}
@@ -87,7 +88,6 @@ function ModalAddProduct({ setIsOpenModalCreate }) {
                         required
                         autoComplete="off"
                         className="w-full px-[14px] py-[4px] mb-[12px] border-[1px] border-solid border-[#ccc] text-[16px] font-medium"
-                        placeholder="Enter quantity..."
                     />
                     <div
                         onClick={handleCreateProduct}

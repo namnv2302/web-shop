@@ -1,27 +1,29 @@
+import { useTranslation } from 'react-i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSort } from '@fortawesome/free-solid-svg-icons';
 
 function SortOptions({ active, onSorting }) {
+    const { t } = useTranslation('Shop');
     const sortOptions = [
         {
             id: 1,
-            content: 'Default sorting',
+            content: t('Sort.Default'),
         },
         {
             id: 2,
-            content: 'Sort by price',
+            content: t('Sort.Price'),
         },
         {
             id: 3,
-            content: 'Sort by time',
+            content: t('Sort.Time'),
         },
         {
             id: 4,
-            content: 'Sort by quantity',
+            content: t('Sort.Quantity'),
         },
         {
             id: 5,
-            content: 'Sort by sold',
+            content: t('Sort.Sold'),
         },
     ];
 

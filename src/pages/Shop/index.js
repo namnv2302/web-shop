@@ -1,6 +1,7 @@
 import { Fragment, useEffect, useState, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass, faChevronDown, faSliders } from '@fortawesome/free-solid-svg-icons';
+import { useTranslation } from 'react-i18next';
 import Sidebar from '~/components/Sidebar';
 import Loading from '~/components/Loading';
 import { useProducts } from '~/hooks';
@@ -10,10 +11,11 @@ import { getAllDocuments } from '~/utils/manageData';
 import SortOptions from '~/components/SortOptions';
 
 function Shop() {
+    const { t } = useTranslation('Shop');
     const { setProducts, products, isLoading } = useProducts();
     const [active, setActive] = useState(1);
     const [isChoosed, setIsChoosed] = useState(false);
-    const [sortValue, setSortValue] = useState('Default sorting');
+    const [sortValue, setSortValue] = useState('Sort.Default');
     const [isOpenSortOption, setIsOpenSortOption] = useState(false);
     const [searchValue, setSearchValue] = useState('');
 
@@ -30,13 +32,13 @@ function Shop() {
         let newProducts = [];
         switch (id) {
             case 1:
-                setSortValue('Default sorting');
+                setSortValue('Sort.Default');
                 newProducts = [...oldProductsRef.current];
 
                 setProducts(newProducts);
                 break;
             case 2:
-                setSortValue('Sort by price');
+                setSortValue('Sort.Price');
                 const arrayPrice = [...oldProductsRef.current].map((item) => item.price);
                 if (isChoosed) {
                     newProducts = sorting([...oldProductsRef.current], arrayPrice, 'price', (a, b) => a - b);
@@ -48,7 +50,7 @@ function Shop() {
                 break;
             case 3:
                 const arrayResult = [];
-                setSortValue('Sort by time');
+                setSortValue('Sort.Time');
                 const arraySec = [...oldProductsRef.current].map((item) => item.timeStamp[1]);
                 if (isChoosed) {
                     arraySec.sort((a, b) => a - b);
@@ -66,7 +68,7 @@ function Shop() {
                 setProducts(arrayResult);
                 break;
             case 4:
-                setSortValue('Sort by quantity');
+                setSortValue('Sort.Quantity');
                 const arrayRemain = [...oldProductsRef.current].map((item) => item.quantity);
                 if (isChoosed) {
                     newProducts = sorting([...oldProductsRef.current], arrayRemain, 'quantity', (a, b) => a - b);
@@ -77,7 +79,7 @@ function Shop() {
                 setProducts(newProducts);
                 break;
             case 5:
-                setSortValue('Sort by sold');
+                setSortValue('Sort.Sold');
                 const arraySold = [...oldProductsRef.current].map((item) => item.sold);
                 if (isChoosed) {
                     newProducts = sorting([...oldProductsRef.current], arraySold, 'sold', (a, b) => a - b);
@@ -115,7 +117,7 @@ function Shop() {
                 <Loading />
             ) : (
                 <div className="mt-[80px]">
-                    <div className="h-[46px] bg-[#f3f4f6] text-center leading-[46px]">Home / Shop</div>
+                    <div className="h-[46px] bg-[#f3f4f6] text-center leading-[46px]">{t('Breadcrumb')}</div>
                     <div className="flex justify-center mt-[60px]">
                         <div className="container flex justify-between px-[16px]">
                             <div className="w-[18%]">
@@ -123,14 +125,14 @@ function Shop() {
                             </div>
                             <div className="w-[82%] ml-[20px]">
                                 <div className="flex items-center justify-between">
-                                    <h3 className="text-[20px] font-semibold">Product</h3>
+                                    <h3 className="text-[20px] font-semibold">{t('Title')}</h3>
                                     <div className="flex items-center h-[40px] w-[360px] border border-[rgb(243 244 246)] border-solid">
                                         <input
                                             onChange={(e) => setSearchValue(e.target.value)}
                                             value={searchValue}
                                             className="flex-1 px-[16px] h-[100%] text-[14px] text-[#333] outline-none font-medium"
                                             type="text"
-                                            placeholder="Search product ..."
+                                            placeholder={t('Search')}
                                         />
                                         <button
                                             onClick={handleSearch}
@@ -144,7 +146,7 @@ function Shop() {
                                         onClick={() => setIsOpenSortOption(!isOpenSortOption)}
                                         className="relative flex items-center justify-between w-[228px] h-[40px] px-[16px] border border-solid cursor-pointer"
                                     >
-                                        <span className="text-[16px] font-medium text-[#000]">{sortValue}</span>
+                                        <span className="text-[16px] font-medium text-[#000]">{t(sortValue)}</span>
                                         <FontAwesomeIcon className="text-[14px]" icon={faChevronDown} />
 
                                         {isOpenSortOption && <SortOptions active={active} onSorting={handleSorting} />}

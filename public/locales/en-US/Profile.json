@@ -1,0 +1,27 @@
+{
+    "Breadcrumb": "Home/Profile",
+    "Options": {
+        "Dashboard": "Dashboard",
+        "Orders": "Orders",
+        "PaymentMethod": "Payment Method",
+        "Address": "Address",
+        "AccountDetails": "Account Details",
+        "Password": "Password",
+        "Logout": "Logout"
+    },
+    "Form": {
+        "Password": {
+            "Current": "Current Password",
+            "New": "New Password"
+        },
+        "Fullname": {
+            "Label": "Fullname"
+        },
+        "Email": {
+            "Label": "Email Address"
+        }
+    },
+    "Update": "Update",
+    "Save": "Save Changes",
+    "Require": "Please complete all information!"
+}

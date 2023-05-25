@@ -1,5 +1,6 @@
-import { useState, useLayoutEffect } from 'react';
+import { useState, useLayoutEffect, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartShopping, faStar } from '@fortawesome/free-solid-svg-icons';
 import { toast } from 'react-toastify';
@@ -8,45 +9,83 @@ import { useAuth, useProducts } from '~/hooks';
 import icons from '~/assets/icons';
 
 function Product() {
+    const { t } = useTranslation(['Product', 'Common']);
     const { state } = useLocation();
     const navigate = useNavigate();
     const { user } = useAuth();
     const { productsChoosed } = useProducts();
-    const [count, setCount] = useState(1);
+    const [stateImage, setStateImage] = useState(() => ({
+        backgroundImage: `url(${state.imageURL})`,
+        backgroundPosition: '0% 0%',
+    }));
+    const [count, setCount] = useState(() => {
+        const choosedItem = productsChoosed.find((item) => item.id === state.id);
+        if (choosedItem) {
+            return choosedItem.count;
+        } else {
+            return 1;
+        }
+    });
 
     useLayoutEffect(() => {
-        if(count <= 0) {
-            setCount(1)
+        if (count <= 0) {
+            setCount(1);
         }
-    }, [count])
+        if (count > state.quantity - state.sold) {
+            toast.info(t('MaxQuantity'));
+            const still = state.quantity - state.sold;
+            setCount(still);
+        }
+    }, [count, setCount, state.quantity, state.sold, t]);
+
+    useEffect(() => {
+        const currentItem = productsChoosed.find((item) => item.id === state.id);
+        if (currentItem) {
+            updateDocument('carts', `${currentItem.id}`, { count: count });
+            // eslint-disable-next-line react-hooks/exhaustive-deps
+        }
+    }, [count, productsChoosed, state.id]);
 
     const handleAddCart = () => {
         if (Object.keys(user).length) {
             const choosedItem = productsChoosed.find((item) => item.id === state.id);
             if (choosedItem) {
                 updateDocument('carts', `${choosedItem.id}`, { count: choosedItem.count + count });
-                toast.success('Add to cart successfully!');
+                toast.success(t('Success.AddCart'));
             } else {
                 addDocument('carts', {
                     ...state,
                     count: count,
                     uid: user.uid,
                 });
-                toast.success('Add to cart successfully!');
+                toast.success(t('Success.AddCart'));
             }
         } else {
             navigate('/login');
         }
     };
 
+    const handleMouseMove = (e) => {
+        const { left, top, width, height } = e.target.getBoundingClientRect();
+        const x = ((e.pageX - left) / width) * 100;
+        const y = ((e.pageY - top) / height) * 100;
+        setStateImage({ backgroundImage: `url(${state.imageURL})`, backgroundPosition: `${x}% ${y}%` });
+    };
+
     return (
         <div className="mt-[80px]">
-            <div className="h-[46px] bg-[#f3f4f6] text-center leading-[46px]">Home / Product</div>
+            <div className="h-[46px] bg-[#f3f4f6] text-center leading-[46px]">{t('Breadcrumb')}</div>
             <div className="flex justify-center mt-[100px] mx-auto">
                 <div className="container flex justify-between items-center px-[16px]">
                     <div className="w-[30%]">
                         <div className="border border-[#eeeded]">
-                            <img src={state.imageURL} alt={state.name} className="w-full block object-cover" />
+                            <figure onMouseMove={(e) => handleMouseMove(e)} style={stateImage} className="image-parent">
+                                <img
+                                    src={state.imageURL}
+                                    alt=""
+                                    className="w-full block object-cover pointer-events-none"
+                                />
+                            </figure>
                         </div>
                     </div>
                     <div className="w-[70%] ml-[20px] py-[10px] pl-[40px] cursor-default">
@@ -61,17 +100,17 @@ function Product() {
                                 <FontAwesomeIcon icon={faStar} className="text-[14px] text-[#ee4d2d]" />
                             </span>
                             <span className="ml-[20px] underline">
-                                1,1k <span className="text-[#767676]">Vote</span>
+                                1,1k <span className="text-[#767676]">{t('Vote')}</span>
                             </span>
                             <span className="ml-[20px]">
-                                {state.sold} <span className="text-[#767676]">Sold</span>
+                                {state.sold} <span className="text-[#767676]">{t('Sold')}</span>
                             </span>
                         </div>
                         <span className="flex items-center mt-[20px]">
-                            <span className="text-[20px] text-[#767676] font-medium">Price:</span>
+                            <span className="text-[20px] text-[#767676] font-medium">{t('Price')}:</span>
                             <p className="text-[20px] text-[#F7442E] font-semibold ml-[14px]">${state.price}</p>
                             <span className="ml-[30px] text-[20px]">
-                                <span className="text-[#767676] font-medium">Brand:</span>
+                                <span className="text-[#767676] font-medium">{t('Brand')}:</span>
                                 <span className="font-semibold text-[14px] ml-[10px] text-[#fff] bg-[#f0f07c] p-[4px] rounded-[4px]">
                                     {state.brand}
                                 </span>
@@ -79,7 +118,7 @@ function Product() {
                             </span>
                         </span>
                         <div className="flex items-center mt-[20px]">
-                            <span>Số lượng</span>
+                            <span>{t('Quantity')}</span>
                             <div className="flex items-center ml-[20px] border-[1px]">
                                 <div
                                     onClick={() => setCount((prev) => prev - 1)}
@@ -98,13 +137,13 @@ function Product() {
                                 </div>
                             </div>
                             <span className="ml-[20px] text-[#767676] text-[14px]">
-                                {state.quantity} sản phẩm có sẵn
+                                {state.quantity - state.sold} {t('Still')}
                             </span>
                         </div>
                         <div className="inline-flex items-center mt-[20px] p-[8px] border-[#F7442E] border-[1px] text-[#F7442E] bg-[#FFEEE8] rounded-[2px] cursor-pointer">
                             <FontAwesomeIcon icon={faCartShopping} />
                             <span onClick={handleAddCart} className="ml-[10px]">
-                                Add to Cart
+                                {t('Add')}
                             </span>
                         </div>
                         <div className="flex items-center mt-[20px]">

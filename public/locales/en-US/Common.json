@@ -1,0 +1,57 @@
+{
+    "Login": "Login",
+    "Register": "Register",
+    "Navigation": {
+        "Home": "Home",
+        "Shop": "Shop",
+        "Pages": "Pages",
+        "Blog": "Blog",
+        "About": "About",
+        "Contact": "Contact"
+    },
+    "Footer": {
+        "About": {
+            "Title": "About Us"
+        },
+        "Useful": {
+            "Title": "Useful Links",
+            "List": {
+                "Item1": "Help & Contact Us",
+                "Item2": "Returns & Refunds",
+                "Item3": "Online Stores",
+                "Item4": "Terms & Conditions"
+            }
+        },
+        "Help": {
+            "Title": "Help",
+            "Wishlist": "Wishlist",
+            "PricingPlans": "Pricing Plans",
+            "OrderTraking": "Order Traking",
+            "Returns": "Returns"
+        },
+        "Send": {
+            "Title": "Send Newsletter",
+            "Desc": "Subscribe to our newsletter and get 10% off your first purchase..",
+            "Button": "Send"
+        },
+        "Copyright": "Made with by"
+    },
+    "RequireLogin": {
+        "Title": "Please Sign In",
+        "Description": "Sign In to view items in your cart",
+        "Login": "Login",
+        "Register": "Register"
+    },
+    "Success": {
+        "Login": "Login successfully!",
+        "AddCart": "Add to cart successfully!",
+        "Order": "Order placed successfully",
+        "Update": "Update successfully!"
+    },
+    "Error": {
+        "EmailPassword": "Email or password incorrect",
+        "Password": "Wrong password"
+    },
+    "SoldOut": "Sold out",
+    "MaxQuantity": "Quantity exceeds existing product"
+}

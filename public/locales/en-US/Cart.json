@@ -1,0 +1,19 @@
+{
+    "Breadcrumb": "Home/Cart",
+    "Table": {
+        "Image": "Image",
+        "Product": "Product",
+        "Price": "Price",
+        "Quantity": "Quantity",
+        "Total": "Total",
+        "Delete": "Delete"
+    },
+    "Total": {
+        "Title": "Cart Totals",
+        "SubTotal": "Sub Total",
+        "Ship": "Shipping",
+        "Total": "Total",
+        "Order": "Place Order"
+    },
+    "Empty": "Your cart is empty"
+}

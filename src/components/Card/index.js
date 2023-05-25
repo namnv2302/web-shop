@@ -2,7 +2,12 @@ import { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { faStar, faHeart } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
+import icons from '~/assets/icons';
+
 function Card({ product }) {
+    const { t } = useTranslation('Common');
     const navigate = useNavigate();
 
     const priceOld = useMemo(() => {
@@ -25,12 +30,27 @@ function Card({ product }) {
         return array;
     }, [product.vote]);
 
+    const handleShowProduct = () => {
+        if (product.isSoldOut) {
+            toast.info(t('SoldOut'));
+        } else {
+            navigate(`/product/${product.id}`, { state: product });
+        }
+    };
+
     return (
-        <div className="w-[25%] px-[10px] ">
+        <div className="w-[25%] px-[10px]">
             <div
-                onClick={() => navigate(`/product/${product.id}`, { state: product })}
-                className="w-full mt-[10px] shadow-sm border border-[#f1f1f1] border-solid cursor-pointer hover:translate-y-[-1px]"
+                onClick={handleShowProduct}
+                className="relative w-full mt-[10px] shadow-sm border border-[#f1f1f1] border-solid cursor-pointer hover:translate-y-[-1px]"
             >
+                {product.isSoldOut && (
+                    <img
+                        src={icons.soldOut}
+                        alt={product.name}
+                        className="absolute w-[80px] right-0 block object-cover"
+                    />
+                )}
                 <img src={product.imageURL} alt={product.name} className="w-full block object-cover" />
                 <div className="flex flex-col justify-between min-h-[134px] p-[10px] bg-white">
                     <h4 className="title-product text-[14px] text-[#333] font-semibold leading-[18px] max-h-[36px] overflow-hidden">

@@ -1,0 +1,32 @@
+{
+    "Search": "Search product...",
+    "Breadcrumb": "Home/Shop",
+    "Title": "Product",
+    "Filter": {
+        "Title": "Filter",
+        "Option": {
+            "Brand": "Brand",
+            "Pet": "Pet"
+        }
+    },
+    "Sort": {
+        "Default": "Default sorting",
+        "Price": "Sort by Price",
+        "Time": "Sort by Time",
+        "Quantity": "Sort by Quantity",
+        "Sold": "Sort by Sold"
+    },
+    "NoLogin": {
+        "Welcome": "Welcome",
+        "Require": "To access wishlist or cart",
+        "Login": "Login",
+        "Collections": "Collections",
+        "Cart": "Cart"
+    },
+    "Logined": {
+        "Welcome": "Hello friend!",
+        "Collections": "Collections",
+        "Cart": "Cart",
+        "Logout": "Logout"
+    }
+}

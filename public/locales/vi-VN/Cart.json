@@ -1,0 +1,19 @@
+{
+    "Breadcrumb": "Trang chủ/Giỏ hàng",
+    "Table": {
+        "Image": "Ảnh",
+        "Product": "Sản phẩm",
+        "Price": "Giá",
+        "Quantity": "Số lượng",
+        "Total": "Tổng",
+        "Delete": "Xóa"
+    },
+    "Total": {
+        "Title": "Tổng sản phẩm",
+        "SubTotal": "Tổng phụ",
+        "Ship": "Phí vận chuyển",
+        "Total": "Tổng",
+        "Order": "Đặt hàng"
+    },
+    "Empty": "Giỏ hàng của bạn trống"
+}

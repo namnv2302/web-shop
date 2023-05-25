@@ -1,0 +1,31 @@
+{
+    "Search": "Tìm kiếm sản phẩm...",
+    "Breadcrumb": "Trang chủ/Cửa hàng",
+    "Filter": {
+        "Title": "Lọc",
+        "Option": {
+            "Brand": "Nhãn hiệu",
+            "Pet": "Thú cưng"
+        }
+    },
+    "Sort": {
+        "Default": "Mặc định",
+        "Price": "Sắp xếp theo giá",
+        "Time": "Sắp xếp theo thời gian",
+        "Quantity": "Sắp xếp theo số lượng",
+        "Sold": "Sắp xếp theo đã bán"
+    },
+    "NoLogin": {
+        "Welcome": "Chào mừng",
+        "Require": "Để truy cập vào giỏ hàng hoặc mục yêu thích",
+        "Login": "Đăng nhập",
+        "Collections": "Sản phẩm",
+        "Cart": "Giỏ hàng"
+    },
+    "Logined": {
+        "Welcome": "Chào bạn!",
+        "Collections": "Sản phẩm",
+        "Cart": "Giỏ hàng",
+        "Logout": "Đăng xuất"
+    }
+}

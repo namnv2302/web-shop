@@ -11,7 +11,7 @@ function AuthProvider({ children }) {
     useEffect(() => {
         const unsub = onAuthStateChanged(auth, (user) => {
             if (user) {
-                if (user.uid === '0XDkTIzK7QPwpjX6tffc2062i8q1') {
+                if (user.uid === 'bZ7IEtsdnifP67VxY2sVWdklXxT2') {
                     const { uid, email } = user;
                     setAdmin({ uid, email });
                 } else {

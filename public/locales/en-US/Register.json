@@ -1,0 +1,11 @@
+{
+    "Title": "Register now!",
+    "Breadcrumb": "Home/Register",
+    "Form": {
+        "Placeholder": {
+            "Email": "Email address",
+            "Password": "Password",
+            "Fullname": "Fullname"
+        }
+    }
+}

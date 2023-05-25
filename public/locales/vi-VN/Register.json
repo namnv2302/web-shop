@@ -1,0 +1,11 @@
+{
+    "Title": "Đăng ký ngay!",
+    "Breadcrumb": "Trang chủ/Đăng ký",
+    "Form": {
+        "Placeholder": {
+            "Email": "Địa chỉ email",
+            "Password": "Mật khẩu",
+            "Fullname": "Họ tên"
+        }
+    }
+}

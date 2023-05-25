@@ -1,8 +1,11 @@
 import { useState, useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useProducts } from '~/hooks';
 import { getAllDocuments } from '~/utils/manageData';
 
 function Sidebar() {
+    const { t } = useTranslation('Shop');
+
     const filterBrandOptions = [
         {
             id: 1,
@@ -16,6 +19,10 @@ function Sidebar() {
             id: 3,
             content: 'EveryYay',
         },
+        {
+            id: 4,
+            content: 'INABA',
+        },
     ];
     const filterPetOptions = [
         {
@@ -27,7 +34,7 @@ function Sidebar() {
             content: 'Cat',
         },
     ];
-    const { setProducts, products } = useProducts();
+    const { setProducts } = useProducts();
     const [checkedBrand, setCheckedBrand] = useState([]);
     const [checkedPet, setCheckedPet] = useState([]);
     const oldProductsRef = useRef([]);
@@ -52,6 +59,8 @@ function Sidebar() {
                         return prev.filter((item) => item.brand !== "Hill's");
                     case 3:
                         return prev.filter((item) => item.brand !== 'EveryYay');
+                    case 4:
+                        return prev.filter((item) => item.brand !== 'INABA');
                     default:
                         return prev;
                 }
@@ -66,6 +75,8 @@ function Sidebar() {
                             return oldProductsRef.current.filter((item) => item.brand === "Hill's");
                         case 3:
                             return oldProductsRef.current.filter((item) => item.brand === 'EveryYay');
+                        case 4:
+                            return oldProductsRef.current.filter((item) => item.brand === 'INABA');
                         default:
                             return prev;
                     }
@@ -79,6 +90,8 @@ function Sidebar() {
                             return [...prev, ...oldProductsRef.current.filter((item) => item.brand === "Hill's")];
                         case 3:
                             return [...prev, ...oldProductsRef.current.filter((item) => item.brand === 'EveryYay')];
+                        case 4:
+                            return [...prev, ...oldProductsRef.current.filter((item) => item.brand === 'INABA')];
                         default:
                             return prev;
                     }
@@ -108,9 +121,9 @@ function Sidebar() {
 
     return (
         <div className="p-[20px] border border-solid">
-            <h3 className="text-[20px] font-semibold mb-[22px]">Filter</h3>
+            <h3 className="text-[20px] font-semibold mb-[22px]">{t('Filter.Title')}</h3>
             <div className="mb-[28px]">
-                <h4 className="text-[18px] font-medium mb-[10px] text-[#000]">Brand</h4>
+                <h4 className="text-[18px] font-medium mb-[10px] text-[#000]">{t('Filter.Option.Brand')}</h4>
                 {filterBrandOptions.map((item) => (
                     <div key={item.id} className="pretty p-default mb-[10px] p-smooth">
                         <input
@@ -125,7 +138,7 @@ function Sidebar() {
                 ))}
             </div>
             <div className="mb-[28px]">
-                <h4 className="text-[18px] font-medium mb-[10px] text-[#000]">Pet</h4>
+                <h4 className="text-[18px] font-medium mb-[10px] text-[#000]">{t('Filter.Option.Pet')}</h4>
                 {filterPetOptions.map((item) => (
                     <div key={item.id} className="pretty p-default mb-[10px] p-smooth">
                         <input

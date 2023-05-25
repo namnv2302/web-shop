@@ -119,3 +119,13 @@ html *::-webkit-scrollbar-track {
     color: #3e5569;
     border: 1px solid #3e5569;
 }
+
+.image-parent {
+    width: 100%;
+    height: auto;
+    background-repeat: no-repeat;
+}
+
+.image-parent:hover img {
+    opacity: 0;
+}

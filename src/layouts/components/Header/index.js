@@ -1,13 +1,15 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { UserIcon } from '~/components/Icons';
+import { useTranslation } from 'react-i18next';
 import { ToastContainer } from 'react-toastify';
 import { useAuth, useProducts } from '~/hooks';
 import images from '~/assets/images';
 import icons from '~/assets/icons';
 import { logout } from '~/services/auth';
+import { SUPPORTED_LOCALES, SupportedLocale } from '~/constants/locales';
 
 function Header() {
+    const { t, i18n } = useTranslation(['Shop', 'Common']);
     const [isOpenUserOption, setIsOpenUserOption] = useState(false);
     const { setUser, user } = useAuth();
     const { productsChoosed } = useProducts();
@@ -26,6 +28,16 @@ function Header() {
         return result;
     }, [productsChoosed]);
 
+    const handleChangeLang = (value) => {
+        i18n.changeLanguage(value);
+    };
+
+    const currentLang = SUPPORTED_LOCALES.find(({ value }) => value === i18n.language);
+
+    useEffect(() => {
+        if (!currentLang) i18n.changeLanguage(SUPPORTED_LOCALES[0].value);
+    }, [currentLang, i18n]);
+
     return (
         <div className="fixed flex items-center justify-center top-0 left-0 right-0 z-10 bg-[#fff] border-b-[1px] divide-gray-100">
             <div className="container flex items-center">
@@ -40,54 +52,72 @@ function Header() {
                         <li>
                             <div
                                 onClick={() => navigate('/')}
-                                className="block cursor-pointer text-[16px] text-[#555] font-medium px-[18px] py-[4px]"
+                                className="block cursor-pointer min-w-[110px] text-center text-[16px] text-[#555] font-medium px-[18px] py-[4px]"
                             >
-                                Home
+                                {t('Navigation.Home')}
                             </div>
                         </li>
                         <li>
                             <div
                                 onClick={() => navigate('/shop')}
-                                className="block cursor-pointer text-[16px] text-[#555] font-medium px-[18px] py-[4px]"
+                                className="block cursor-pointer min-w-[110px] text-center text-[16px] text-[#555] font-medium px-[18px] py-[4px]"
                             >
-                                Shop
+                                {t('Navigation.Shop')}
                             </div>
                         </li>
                         <li>
                             <div
                                 onClick={() => navigate('/')}
-                                className="block cursor-pointer text-[16px] text-[#555] font-medium px-[18px] py-[4px]"
+                                className="block cursor-pointer min-w-[110px] text-center text-[16px] text-[#555] font-medium px-[18px] py-[4px]"
                             >
-                                Pages
+                                {t('Navigation.Pages')}
                             </div>
                         </li>
                         <li>
                             <div
                                 onClick={() => navigate('/')}
-                                className="block cursor-pointer text-[16px] text-[#555] font-medium px-[18px] py-[4px]"
+                                className="block cursor-pointer min-w-[110px] text-center text-[16px] text-[#555] font-medium px-[18px] py-[4px]"
                             >
-                                Blog
+                                {t('Navigation.Blog')}
                             </div>
                         </li>
                         <li>
                             <div
                                 onClick={() => navigate('/')}
-                                className="block cursor-pointer text-[16px] text-[#555] font-medium px-[18px] py-[4px]"
+                                className="block cursor-pointer min-w-[110px] text-center text-[16px] text-[#555] font-medium px-[18px] py-[4px]"
                             >
-                                About
+                                {t('Navigation.About')}
                             </div>
                         </li>
                         <li>
                             <div
                                 onClick={() => navigate('/')}
-                                className="block cursor-pointer text-[16px] text-[#555] font-medium px-[18px] py-[4px]"
+                                className="block cursor-pointer min-w-[110px] text-center text-[16px] text-[#555] font-medium px-[18px] py-[4px]"
                             >
-                                Contact
+                                {t('Navigation.Contact')}
                             </div>
                         </li>
                     </ul>
                     <div className="flex items-center">
-                        <div onClick={() => navigate('/cart')} className="relative cursor-pointer">
+                        <div className="flex items-center cursor-pointer">
+                            {currentLang.value === SupportedLocale['en-US'] ? (
+                                <img
+                                    onClick={() => handleChangeLang(SupportedLocale['vi-VN'])}
+                                    src={icons.unitedKingdomFlag}
+                                    alt="united"
+                                    z
+                                    className="w-[28px] h-[28px] bg-transparent"
+                                />
+                            ) : (
+                                <img
+                                    onClick={() => handleChangeLang(SupportedLocale['en-US'])}
+                                    src={icons.vietnamFlag}
+                                    alt="vietnamese"
+                                    className="w-[28px] h-[28px] bg-transparent"
+                                />
+                            )}
+                        </div>
+                        <div onClick={() => navigate('/cart')} className="relative cursor-pointer ml-[24px]">
                             <img src={icons.cart} alt="cart" className="w-[28px] h-[28px]" />
                             {productsChoosed.length > 0 && (
                                 <span className="absolute top-[-8px] right-[-8px] flex items-center justify-center min-w-[18px] min-h-[18px] rounded-full bg-[#F6AB49] text-[#fff] text-[13px]">
@@ -109,7 +139,7 @@ function Header() {
                                             <div className="border-b border-[#eee]">
                                                 <span className="absolute top-[-3px] right-0 block h-[3px] w-[40px] bg-[#F6AB49]"></span>
                                                 <span className="block mt-[14px] mx-[16px] mb-[4px] font-semibold cursor-default">
-                                                    Hello friend!
+                                                    {t('Logined.Welcome')}
                                                 </span>
                                                 <span
                                                     onClick={() => navigate('/profile')}
@@ -133,19 +163,19 @@ function Header() {
                                                     onClick={() => navigate('/shop')}
                                                     className="block px-[16px] py-[6px] cursor-pointer hover:bg-[#f3f4f6]"
                                                 >
-                                                    Collections
+                                                    {t('Logined.Collections')}
                                                 </span>
                                                 <span
                                                     onClick={() => navigate('/cart')}
                                                     className="block px-[16px] py-[6px] cursor-pointer hover:bg-[#f3f4f6]"
                                                 >
-                                                    Cart
+                                                    {t('Logined.Cart')}
                                                 </span>
                                                 <span
                                                     onClick={handleLogout}
                                                     className="block px-[16px] py-[6px] cursor-pointer hover:bg-[#f3f4f6]"
                                                 >
-                                                    Logout
+                                                    {t('Logined.Logout')}
                                                 </span>
                                             </div>
                                         </div>
@@ -153,15 +183,17 @@ function Header() {
                                         <div className="absolute z-10 mt-[26px] shadow-md top-[100%] right-0 min-w-[250px] bg-[#fff] rounded-[4px] profile-children text-[14px] font-medium text-[#000] ">
                                             <div className="px-[16px] py-[14px] border-b border-[#eee]">
                                                 <span className="absolute top-[-3px] right-0 block h-[3px] w-[40px] bg-[#F6AB49]"></span>
-                                                <span className="block mb-[2px] font-semibold">Welcome</span>
+                                                <span className="block mb-[2px] font-semibold">
+                                                    {t('NoLogin.Welcome')}
+                                                </span>
                                                 <span className="block mb-[6px] font-medium">
-                                                    To access wishlist or cart
+                                                    {t('NoLogin.Require')}
                                                 </span>
                                                 <div
                                                     onClick={() => navigate('/login')}
-                                                    className="inline-flex items-center justify-center cursor-pointer w-[70px] h-[26px] text-[#F6AB49] border border-solid border-[#F6AB49] rounded-[6px]"
+                                                    className="inline-flex items-center justify-center cursor-pointer min-w-[70px] h-[26px] px-[6px] text-[#F6AB49] border border-solid border-[#F6AB49] rounded-[6px]"
                                                 >
-                                                    Sign In
+                                                    {t('NoLogin.Login')}
                                                 </div>
                                             </div>
 
@@ -170,13 +202,13 @@ function Header() {
                                                     onClick={() => navigate('/shop')}
                                                     className="block px-[16px] py-[6px] cursor-pointer"
                                                 >
-                                                    Collections
+                                                    {t('NoLogin.Collections')}
                                                 </span>
                                                 <span
                                                     onClick={() => navigate('/cart')}
                                                     className="block px-[16px] py-[6px] cursor-pointer"
                                                 >
-                                                    Cart
+                                                    {t('NoLogin.Cart')}
                                                 </span>
                                             </div>
                                         </div>

@@ -1,11 +1,13 @@
 import { useEffect, useRef, useState } from 'react';
 import { toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '~/hooks';
 import { upload } from '~/services/auth';
 import images from '~/assets/images';
 import { CameraIcon } from '~/components/Icons';
 
 function FormInfo() {
+    const { t } = useTranslation('Profile');
     const { user, setUser } = useAuth();
     const [isEdit, setIsEdit] = useState(false);
     const [isChange, setIsChange] = useState(false);
@@ -79,7 +81,7 @@ function FormInfo() {
                     </div>
                 </div>
                 <label htmlFor="display-name" className="font-semibold text-[14px] text-[#555] mb-[10px]">
-                    Display Name
+                    {t('Form.Fullname.Label')}
                 </label>
                 <input
                     id="display-name"
@@ -87,14 +89,14 @@ function FormInfo() {
                     value={displayName}
                     disabled={!isEdit}
                     autoComplete="off"
-                    placeholder="Display Name"
+                    placeholder={t('Form.Fullname.Label')}
                     onChange={(e) => setDisplayName(e.target.value)}
                     className="py-[10px] px-[10px] text-[14px] border border-[#ebebeb]"
                 />
             </div>
             <div className="flex flex-col w-[100%] mt-[15px]">
                 <label htmlFor="email" className="font-semibold text-[14px] text-[#555] mb-[10px]">
-                    Email Address
+                    {t('Form.Email.Label')}
                 </label>
                 <input
                     id="email"
@@ -102,7 +104,7 @@ function FormInfo() {
                     value={user.email}
                     disabled={true}
                     autoComplete="off"
-                    placeholder="Email Address"
+                    placeholder={t('Form.Email.Label')}
                     className="py-[10px] px-[10px] text-[14px] border border-[#ebebeb]"
                 />
             </div>

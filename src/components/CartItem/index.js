@@ -1,10 +1,13 @@
 import { useState, useLayoutEffect, useEffect, useMemo } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashCan, faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
 import { updateDocument, deleteFieldsDoc } from '~/utils/manageData';
 import { useProducts } from '~/hooks';
 
 function CartItem({ product }) {
+    const { t } = useTranslation('Common');
     const { productsChoosed } = useProducts();
     const [count, setCount] = useState(product.count);
 
@@ -16,7 +19,12 @@ function CartItem({ product }) {
         if (count <= 0) {
             setCount(1);
         }
-    }, [count, setCount]);
+        if (count > product.quantity - product.sold) {
+            toast.info(t('MaxQuantity'));
+            setCount(product.quantity - product.sold);
+        }
+    }, [count, setCount, product.quantity, product.sold, t]);
+
     useEffect(() => {
         const currentItem = productsChoosed.find((item) => item.id === product.id);
         updateDocument('carts', `${currentItem.id}`, { count: count });

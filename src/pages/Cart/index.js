@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { v4 } from 'uuid';
 import { toast } from 'react-toastify';
 import { CartIcon } from '~/components/Icons';
@@ -11,6 +12,7 @@ import { addDocument, deleteFieldsDoc, updateDocument } from '~/utils/manageData
 import TotalTable from '~/components/TotalTable';
 
 function Cart() {
+    const { t } = useTranslation(['Cart', 'Common']);
     const { productsChoosed } = useProducts();
     const { user } = useAuth();
     const navigate = useNavigate();
@@ -34,18 +36,19 @@ function Cart() {
             deleteFieldsDoc('carts', `${item.id}`, 'uid');
         });
         setIsOrderPlaced(true);
-        toast.success('Order placed successfully');
+        toast.success(t('Success.Order'));
 
         orderList.forEach((product) => {
             updateDocument('products', `${product.id}`, {
                 sold: product.sold + product.count,
+                isSoldOut: product.count + product.sold >= product.quantity ? true : false,
             });
         });
     };
 
     return (
         <div className="mt-[80px]">
-            <div className="h-[46px] bg-[#f3f4f6] text-center leading-[46px]">Home / Cart</div>
+            <div className="h-[46px] bg-[#f3f4f6] text-center leading-[46px]">{t('Breadcrumb')}</div>
 
             {!isOrderPlaced ? (
                 Object.keys(user).length ? (
@@ -57,22 +60,22 @@ function Cart() {
                                         <thead>
                                             <tr className="border border-[#ebebeb] h-[53px]">
                                                 <th className="text-[15px] w-[138px] font-bold border border-[#ebebeb]">
-                                                    IMAGE
+                                                    {t('Table.Image')}
                                                 </th>
                                                 <th className="text-[15px] w-[324px] font-bold border border-[#ebebeb]">
-                                                    PRODUCT
+                                                    {t('Table.Product')}
                                                 </th>
                                                 <th className="text-[15px] w-[162px] font-bold border border-[#ebebeb]">
-                                                    PRICE
+                                                    {t('Table.Price')}
                                                 </th>
                                                 <th className="text-[15px] w-[216px] font-bold border border-[#ebebeb]">
-                                                    QUANTITY
+                                                    {t('Table.Quantity')}
                                                 </th>
                                                 <th className="text-[15px] w-[144px] font-bold border border-[#ebebeb]">
-                                                    TOTAL
+                                                    {t('Table.Total')}
                                                 </th>
                                                 <th className="text-[15px] w-[180px] font-bold border border-[#ebebeb]">
-                                                    REMOVE
+                                                    {t('Table.Delete')}
                                                 </th>
                                             </tr>
                                         </thead>
@@ -96,7 +99,7 @@ function Cart() {
                             <div className="flex items-center justify-center w-[74px] h-[74px] rounded-full shadow-[0_0_10px_rgba(0,0,0,0.05)] border">
                                 <CartIcon />
                             </div>
-                            <span className="mt-[10px]">Your cart is empty</span>
+                            <span className="mt-[10px]">{t('Empty')}</span>
                         </div>
                     )
                 ) : (
@@ -104,13 +107,15 @@ function Cart() {
                         <div className="flex items-center justify-center w-[74px] h-[74px] rounded-full shadow-[0_0_10px_rgba(0,0,0,0.05)] border">
                             <UserIcon />
                         </div>
-                        <span className="text-[24px] text-[#333] font-semibold mt-[24px]">Please Sign In</span>
-                        <span className="mt-[10px]">Sign In to view items in your cart</span>
+                        <span className="text-[24px] text-[#333] font-semibold mt-[24px]">
+                            {t('RequireLogin.Title')}
+                        </span>
+                        <span className="mt-[10px]">{t('RequireLogin.Description')}</span>
                         <div
                             onClick={() => navigate('/login')}
                             className="flex items-center justify-center mt-[30px] text-[#fff] bg-[#F6AB49] w-[136px] h-[48px] rounded-[10px] shadow-[0_0_12px_rgba(0,0,0,0.24)] cursor-pointer"
                         >
-                            Sign In
+                            {t('RequireLogin.Login')}
                         </div>
                     </div>
                 )

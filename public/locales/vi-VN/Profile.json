@@ -1,0 +1,27 @@
+{
+    "Breadcrumb": "Trang chủ/Cá nhân",
+    "Options": {
+        "Dashboard": "Bảng tin",
+        "Orders": "Đơn hàng",
+        "PaymentMethod": "Thanh toán",
+        "Address": "Địa chỉ",
+        "AccountDetails": "Tài khoản",
+        "Password": "Mật khẩu",
+        "Logout": "Đăng xuất"
+    },
+    "Form": {
+        "Password": {
+            "Current": "Mật khẩu hiện tại",
+            "New": "Mật khẩu mới"
+        },
+        "Fullname": {
+            "Label": "Họ tên"
+        },
+        "Email": {
+            "Label": "Địa chỉ email"
+        }
+    },
+    "Update": "Cập nhật",
+    "Save": "Lưu thay đổi",
+    "Require": "Vui lòng điền đầy đủ thông tin!"
+}

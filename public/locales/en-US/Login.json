@@ -1,0 +1,13 @@
+{
+    "Title": "Login now!",
+    "Breadcrumb": "Home/Login",
+    "Form": {
+        "Placeholder": {
+            "Email": "Email address",
+            "Password": "Password"
+        }
+    },
+    "Helper": {
+        "Text": "Don't have an account"
+    }
+}

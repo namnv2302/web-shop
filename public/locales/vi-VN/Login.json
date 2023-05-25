@@ -1,0 +1,13 @@
+{
+    "Title": "Đăng nhập ngay!",
+    "Breadcrumb": "Trang chủ/Đăng nhập",
+    "Form": {
+        "Placeholder": {
+            "Email": "Địa chỉ email",
+            "Password": "Mật khẩu"
+        }
+    },
+    "Helper": {
+        "Text": "Không có tài khoản"
+    }
+}
